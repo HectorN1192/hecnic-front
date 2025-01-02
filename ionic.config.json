@@ -1,0 +1,7 @@
+{
+  "name": "hecnic-front",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
