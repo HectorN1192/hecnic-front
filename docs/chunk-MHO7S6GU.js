@@ -1,0 +1,2 @@
+import{Ia as o,Ja as c,Ua as r,ua as i}from"./chunk-WBQFNXIJ.js";import"./chunk-RW4GY4BD.js";var l=(()=>{let t=class t{constructor(){}ngOnInit(){}};t.\u0275fac=function(n){return new(n||t)},t.\u0275cmp=i({type:t,selectors:[["app-client-detail"]],decls:2,vars:0,template:function(n,p){n&1&&(o(0,"p"),r(1,` client-detail works!
+`),c())},encapsulation:2});let e=t;return e})();export{l as ClientDetailComponent};
