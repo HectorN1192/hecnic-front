@@ -12,10 +12,10 @@
           <ion-menu-toggle auto-hide="false">
             <ion-item
               [routerDirection]="'root'"
-              [routerLink]="[p.path]"
-              [routerLinkActive]="[p.path ?? '']"
+              [routerLink]="[p.link]"
+              [routerLinkActive]="[p.title]"
             >
-              <ion-icon slot="start" [name]=""></ion-icon>
+              <ion-icon slot="start" [name]="p.icon"></ion-icon>
               <ion-label>
                 {{ p.title }}
               </ion-label>
@@ -23,7 +23,9 @@
           </ion-menu-toggle>
           }
         </ion-list>
-        <ion-button expand="full" color="tertiary">Cerrar Sesión</ion-button>
+        <ion-button expand="full" color="tertiary" [routerLink]="['/']"
+          >Cerrar Sesión</ion-button
+        >
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>

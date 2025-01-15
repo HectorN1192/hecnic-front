@@ -1,0 +1,1 @@
+import"./chunk-RW4GY4BD.js";var e=[{path:"",loadComponent:()=>import("./chunk-U6ZKO5G7.js").then(t=>t.ClientComponent)},{path:"create",title:"Crear Cliente",loadComponent:()=>import("./chunk-MHO7S6GU.js").then(t=>t.ClientDetailComponent)},{path:"**",redirectTo:"",pathMatch:"full"}];export{e as client_routes};

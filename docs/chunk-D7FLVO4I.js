@@ -1,0 +1,2 @@
+import{n as s}from"./chunk-STWCSBZB.js";import{Ea as i,Ia as r,Ja as c,Ua as p,Xa as a,ua as o}from"./chunk-WBQFNXIJ.js";import"./chunk-RW4GY4BD.js";var m=()=>["dashboard"],g=(()=>{let t=class t{constructor(){}ngOnInit(){}};t.\u0275fac=function(e){return new(e||t)},t.\u0275cmp=o({type:t,selectors:[["app-login"]],decls:2,vars:2,consts:[["expand","block",3,"routerLink"]],template:function(e,u){e&1&&(r(0,"ion-button",0),p(1,` Acceso a la app
+`),c()),e&2&&i("routerLink",a(1,m))},dependencies:[s],encapsulation:2});let n=t;return n})();export{g as LoginComponent};

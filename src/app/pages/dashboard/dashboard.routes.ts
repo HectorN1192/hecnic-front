@@ -11,18 +11,27 @@ export const dashboard_routes: Routes = [
         title: 'Resumen',
         loadComponent: () =>
           import('./resume/resume.component').then((c) => c.ResumeComponent),
+        data: {
+          icon: 'home',
+        },
       },
       {
         path: 'client',
         title: 'Clientes',
         loadChildren: () =>
           import('./client/client.routes').then((r) => r.client_routes),
+        data: {
+          icon: 'person-circle',
+        },
       },
       {
         path: 'product',
         title: 'Productos',
         loadChildren: () =>
           import('./product/product.routes').then((r) => r.product_routes),
+        data: {
+          icon: 'newspaper',
+        },
       },
       {
         path: '**',
