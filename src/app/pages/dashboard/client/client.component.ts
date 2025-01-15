@@ -8,9 +8,7 @@ import {
   IonHeader,
   IonInput,
   IonItem,
-  IonLabel,
   IonMenuButton,
-  IonRouterLink,
   IonRow,
   IonTitle,
   IonToolbar,
@@ -21,7 +19,6 @@ import {
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.scss'],
   imports: [
-    RouterLink,
     IonHeader,
     IonToolbar,
     IonButtons,
@@ -31,10 +28,9 @@ import {
     IonRow,
     IonCol,
     IonButton,
-    IonRouterLink,
     IonItem,
-    IonLabel,
     IonInput,
+    RouterLink,
   ],
 })
 export class ClientComponent implements OnInit {
