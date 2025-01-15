@@ -32,7 +32,7 @@ export class FolderPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private readonly http = inject(HttpClient);
 
-  data$ = this.http.get(`${environment.url}/client`);
+  data$ = this.http.get(`${environment.url}`);
 
   constructor() {}
 
