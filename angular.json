@@ -18,8 +18,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "baseHref": "/hecnic-front/",
             "outputPath": {
-              "base": "hecnic-front"
+              "base": "www"
             },
             "index": "src/index.html",
             "polyfills": ["src/polyfills.ts"],
