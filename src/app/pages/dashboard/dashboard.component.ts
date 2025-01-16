@@ -19,7 +19,15 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 
-import { home, newspaper, personCircle } from 'ionicons/icons';
+import {
+  briefcaseOutline,
+  documentOutline,
+  hammerOutline,
+  homeOutline,
+  newspaperOutline,
+  personCircleOutline,
+  settingsOutline,
+} from 'ionicons/icons';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -61,9 +69,13 @@ export class DashboardComponent implements OnInit {
 
   constructor() {
     addIcons({
-      personCircle,
-      home,
-      newspaper,
+      briefcaseOutline,
+      documentOutline,
+      hammerOutline,
+      homeOutline,
+      newspaperOutline,
+      personCircleOutline,
+      settingsOutline,
     });
   }
 }

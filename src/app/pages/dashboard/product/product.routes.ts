@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { RouteActions } from '@core/enums';
 
 export const product_routes: Routes = [
   {
@@ -7,8 +8,16 @@ export const product_routes: Routes = [
       import('./product.component').then((c) => c.ProductComponent),
   },
   {
-    path: 'create',
-    title: 'Crear producte',
+    path: RouteActions.CREATE,
+    title: 'Crear producto',
+    loadComponent: () =>
+      import('./product-detail/product-detail.component').then(
+        (m) => m.ProductDetailComponent
+      ),
+  },
+  {
+    path: RouteActions.EDIT_ID,
+    title: 'Editar producto',
     loadComponent: () =>
       import('./product-detail/product-detail.component').then(
         (m) => m.ProductDetailComponent

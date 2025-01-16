@@ -1,29 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  IonButtons,
-  IonCol,
-  IonContent,
-  IonHeader,
-  IonMenuButton,
-  IonRow,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone';
-
+import { IonCol, IonContent, IonRow } from '@ionic/angular/standalone';
+import { HeaderPageComponent } from '@shared/components';
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.scss'],
-  imports: [
-    IonButtons,
-    IonCol,
-    IonContent,
-    IonHeader,
-    IonMenuButton,
-    IonRow,
-    IonTitle,
-    IonToolbar,
-  ],
+  imports: [HeaderPageComponent, IonCol, IonContent, IonRow],
 })
 export class ProductDetailComponent implements OnInit {
   constructor() {}

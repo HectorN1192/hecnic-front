@@ -2,19 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   IonButton,
-  IonButtons,
   IonCol,
   IonContent,
-  IonHeader,
   IonInput,
   IonItem,
-  IonMenuButton,
   IonRouterLink,
   IonRow,
-  IonTitle,
-  IonToolbar,
 } from '@ionic/angular/standalone';
-
+import { HeaderPageComponent } from '@shared/components';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -22,17 +17,13 @@ import {
   imports: [
     RouterLink,
     IonButton,
-    IonButtons,
     IonCol,
     IonContent,
-    IonHeader,
     IonInput,
     IonItem,
-    IonMenuButton,
     IonRouterLink,
     IonRow,
-    IonTitle,
-    IonToolbar,
+    HeaderPageComponent,
   ],
 })
 export class ProductComponent implements OnInit {

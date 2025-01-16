@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { RouteActions } from '@core/enums';
 
 export const client_routes: Routes = [
   {
@@ -7,11 +8,27 @@ export const client_routes: Routes = [
       import('./client.component').then((c) => c.ClientComponent),
   },
   {
-    path: 'create',
+    path: RouteActions.CREATE,
     title: 'Crear Cliente',
     loadComponent: () =>
       import('./client-detail/client-detail.component').then(
         (m) => m.ClientDetailComponent
+      ),
+  },
+  {
+    path: RouteActions.EDIT_ID,
+    title: 'Editar Cliente',
+    loadComponent: () =>
+      import('./client-detail/client-detail.component').then(
+        (m) => m.ClientDetailComponent
+      ),
+  },
+  {
+    path: RouteActions.VIEW_ID,
+    title: 'Datos del Cliente',
+    loadComponent: () =>
+      import('./client-view/client-view.component').then(
+        (m) => m.ClientViewComponent
       ),
   },
   {

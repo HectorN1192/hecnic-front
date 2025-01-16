@@ -12,5 +12,7 @@ export const routes: Routes = [
       import('./pages/dashboard/dashboard.routes').then(
         (r) => r.dashboard_routes
       ),
+    // canActivate: [authGuardFn],
+    // canActivateChild: [authGuardFn],
   },
 ];

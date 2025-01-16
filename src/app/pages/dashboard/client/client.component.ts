@@ -1,29 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { RouteActions } from '@core/enums';
 import {
   IonButton,
-  IonButtons,
   IonCol,
   IonContent,
-  IonHeader,
   IonInput,
   IonItem,
-  IonMenuButton,
   IonRow,
-  IonTitle,
-  IonToolbar,
 } from '@ionic/angular/standalone';
+import { HeaderPageComponent } from '@shared/components';
 
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.scss'],
   imports: [
-    IonHeader,
-    IonToolbar,
-    IonButtons,
-    IonMenuButton,
-    IonTitle,
     IonContent,
     IonRow,
     IonCol,
@@ -31,6 +23,7 @@ import {
     IonItem,
     IonInput,
     RouterLink,
+    HeaderPageComponent,
   ],
 })
 export class ClientComponent implements OnInit {
@@ -39,8 +32,4 @@ export class ClientComponent implements OnInit {
   RouteActions = RouteActions;
 
   ngOnInit() {}
-}
-
-export enum RouteActions {
-  CREATE = 'create',
 }

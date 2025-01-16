@@ -15,7 +15,7 @@
               [routerLink]="[p.link]"
               [routerLinkActive]="[p.title]"
             >
-              <ion-icon slot="start" [name]="p.icon"></ion-icon>
+              <ion-icon slot="start" [name]="p.icon + '-outline'"></ion-icon>
               <ion-label>
                 {{ p.title }}
               </ion-label>
@@ -23,7 +23,7 @@
           </ion-menu-toggle>
           }
         </ion-list>
-        <ion-button expand="full" color="tertiary" [routerLink]="['/']"
+        <ion-button expand="block" [routerLink]="['/']"
           >Cerrar Sesión</ion-button
         >
       </ion-content>
