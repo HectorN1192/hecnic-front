@@ -13,6 +13,7 @@ import {
   IonMenuToggle,
   IonRouterLink,
   IonRouterOutlet,
+  IonRow,
   IonSplitPane,
   IonTitle,
   IonToolbar,
@@ -50,6 +51,7 @@ import {
     IonToolbar,
     IonTitle,
     IonButton,
+    IonRow,
   ],
 })
 export class DashboardComponent implements OnInit {
