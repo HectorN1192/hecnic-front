@@ -49,11 +49,15 @@ export class LoginComponent {
 
   login() {
     const user = this.formLogin.getRawValue();
-    this._authService.login(user).subscribe((data) => {
-      this._tokenService.setToken(data.token);
-      this._tokenService.setUserName(data.name);
-      this._tokenService.setAuthorities(data.authorities);
+    if (user.name) {
+      this._authService.login(user).subscribe((data) => {
+        this._tokenService.setToken(data.token);
+        this._tokenService.setUserName(data.name);
+        this._tokenService.setAuthorities(data.authorities);
+        this._router.navigate([Endpoints.DASHBOARD]);
+      });
+    } else {
       this._router.navigate([Endpoints.DASHBOARD]);
-    });
+    }
   }
 }
