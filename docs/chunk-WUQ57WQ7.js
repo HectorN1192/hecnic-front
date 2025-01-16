@@ -1,0 +1,2 @@
+import{Ma as o,Na as c,Ya as r,wa as i}from"./chunk-NV5PZE4Y.js";import"./chunk-RW4GY4BD.js";var l=(()=>{let e=class e{constructor(){}ngOnInit(){}};e.\u0275fac=function(n){return new(n||e)},e.\u0275cmp=i({type:e,selectors:[["app-client-view"]],decls:2,vars:0,template:function(n,s){n&1&&(o(0,"p"),r(1,` client-view works!
+`),c())},encapsulation:2});let t=e;return t})();export{l as ClientViewComponent};

@@ -1,1 +1,0 @@
-import"./chunk-RW4GY4BD.js";var o=[{path:"",loadComponent:()=>import("./chunk-GBGTHXZ7.js").then(t=>t.ProductComponent)},{path:"create",title:"Crear producte",loadComponent:()=>import("./chunk-P3RU3BT4.js").then(t=>t.ProductDetailComponent)},{path:"**",redirectTo:"",pathMatch:"full"}];export{o as product_routes};
