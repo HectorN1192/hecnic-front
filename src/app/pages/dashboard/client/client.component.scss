@@ -1,0 +1,11 @@
+.btn-actions {
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  width: fit-content;
+
+  .icon-actions {
+    cursor: pointer;
+    font-size: 1.3rem;
+  }
+}

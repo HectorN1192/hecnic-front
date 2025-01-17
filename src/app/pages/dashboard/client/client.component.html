@@ -20,4 +20,43 @@
       </ion-item>
     </ion-col>
   </ion-row>
+
+  <ngx-datatable
+    #table
+    class="material"
+    [messages]="{ emptyMessage: 'No hay clientes con ese filtro' }"
+    [scrollbarH]="true"
+    [limit]="10"
+    [rows]="clientsRows$ | async"
+    [rowHeight]="50"
+    [columns]="columns"
+    [columnMode]="'force'"
+    [sorts]="[{ prop: 'id_client', dir: 'asc' }]"
+    [sortType]="sortType.multi"
+    [headerHeight]="50"
+    [footerHeight]="50"
+  >
+  </ngx-datatable>
+
+  <ng-template #actions let-row="row" let-value="value" let-i="index">
+    <div class="btn-actions">
+      <ion-icon
+        class="icon-actions"
+        slot="start"
+        [name]="'create-outline'"
+        [routerLink]="[RouteActions.EDIT, row.id_client]"
+      ></ion-icon>
+      <ion-icon
+        class="icon-actions"
+        slot="icon-only"
+        name="eye-outline"
+        [routerLink]="[RouteActions.VIEW, row.id_client]"
+      ></ion-icon>
+      <ion-icon
+        class="icon-actions"
+        slot="icon-only"
+        name="trash-outline"
+      ></ion-icon>
+    </div>
+  </ng-template>
 </ion-content>

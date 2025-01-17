@@ -19,7 +19,6 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-
 import {
   briefcaseOutline,
   documentOutline,
