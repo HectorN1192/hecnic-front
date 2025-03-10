@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  IonBackButton,
   IonButtons,
   IonCol,
   IonContent,
   IonHeader,
-  IonMenuButton,
   IonRow,
   IonTitle,
   IonToolbar,
@@ -19,7 +19,7 @@ import {
     IonCol,
     IonContent,
     IonHeader,
-    IonMenuButton,
+    IonBackButton,
     IonRow,
     IonTitle,
     IonToolbar,

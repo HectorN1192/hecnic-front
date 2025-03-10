@@ -3,6 +3,7 @@ import {
   PreloadAllModules,
   RouteReuseStrategy,
   provideRouter,
+  withComponentInputBinding,
   withHashLocation,
   withPreloading,
 } from '@angular/router';
@@ -23,6 +24,7 @@ bootstrapApplication(AppComponent, {
     provideHttpClient(withInterceptors([authInterceptor])),
     provideRouter(
       routes,
+      withComponentInputBinding(),
       withPreloading(PreloadAllModules),
       withHashLocation()
     ),
