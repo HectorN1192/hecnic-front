@@ -24,6 +24,13 @@ export const construction_routes: Routes = [
       ),
   },
   {
+    path: RouteActions.VIEW_ID,
+    loadComponent: () =>
+      import('./construction-detail/construction-detail.component').then(
+        (m) => m.ConstructionDetailComponent
+      ),
+  },
+  {
     path: '**',
     redirectTo: '',
     pathMatch: 'full',

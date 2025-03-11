@@ -8,7 +8,110 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-row>
-    <ion-col size="12"> </ion-col>
-  </ion-row>
+  @if (totalsClient) {
+  <ion-item>
+    @if (client$ | async; as client) {
+    <ion-input type="text" [value]="client.name" readOnly></ion-input>
+    }
+  </ion-item>
+
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size-xs="12" size-sm="6">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Facturación Total</ion-card-title>
+            <ion-card-content>
+              {{ totalsClient.total_invoices | currency : "EUR" }}
+            </ion-card-content>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+      <ion-col size-xs="12" size-sm="6">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Total Retenciones</ion-card-title>
+            <ion-card-content>
+              {{ totalsClient.total_retentions | currency : "EUR" }}
+            </ion-card-content>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-xs="12" size-sm="6">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Retenciones Cobradas</ion-card-title>
+            <ion-card-content>
+              {{ totalsClient.total_retentions_receive | currency : "EUR" }}
+            </ion-card-content>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+      <ion-col size-xs="12" size-sm="6">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Retenciones Pendientes</ion-card-title>
+            <ion-card-content>
+              {{ totalsClient.total_retentions_pending | currency : "EUR" }}
+            </ion-card-content>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-toolbar class="m-t-10" color="primary">
+      <ion-title slot="start">Obras</ion-title>
+    </ion-toolbar>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-input
+            label="Buscar Obra"
+            labelPlacement="floating"
+            placeholder="Buscar Obra"
+            type="text"
+            (keyup)="updateFilter($event)"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ngx-datatable
+      #table
+      class="material"
+      [messages]="{ emptyMessage: 'No hay obras con ese filtro' }"
+      [scrollbarH]="true"
+      [limit]="5"
+      [rows]="rows"
+      [rowHeight]="50"
+      [columns]="columns"
+      [columnMode]="'force'"
+      [sorts]="[{ prop: 'total_retention_receive', dir: 'asc' }]"
+      [sortType]="sortType.multi"
+      [headerHeight]="50"
+      [footerHeight]="50"
+    >
+    </ngx-datatable>
+  </ion-grid>
+  }
 </ion-content>
+
+<ng-template #actions let-row="row" let-value="value" let-i="index">
+  <div class="btn-actions">
+    <ion-icon
+      class="icon-actions"
+      slot="start"
+      name="eye-outline"
+      [routerLink]="[
+        '/',
+        Endpoints.DASHBOARD,
+        Endpoints.CONSTRUCTION,
+        RouteActions.VIEW,
+        row.id_construction
+      ]"
+    ></ion-icon>
+  </div>
+</ng-template>

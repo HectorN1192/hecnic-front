@@ -39,6 +39,8 @@ export class UtilsService {
     await toast.present();
   }
 
+  presentDeleteToast() {}
+
   downloadPDF(file: Blob, filename: string) {
     const blob: any = new Blob([file], { type: 'application/pdf' });
     const downloadLink = document.createElement('a');

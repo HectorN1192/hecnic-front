@@ -1,4 +1,5 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormArray,
   FormBuilder,
@@ -6,6 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Client, Email } from '@core/dtos';
 import { ClientService, EmailService, UtilsService } from '@core/services';
 import {
@@ -50,6 +52,8 @@ import { trashOutline } from 'ionicons/icons';
 export class ClientDetailComponent implements OnInit {
   @Input() id!: number;
 
+  private readonly _destroyRef = inject(DestroyRef);
+  private readonly _router = inject(Router);
   private readonly _formbuilder = inject(FormBuilder);
   private readonly _clientService = inject(ClientService);
   private readonly _emailService = inject(EmailService);
@@ -74,20 +78,22 @@ export class ClientDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('ID: ', this.id);
-    this.getById(this.id);
+    if (this.id) this.getById(this.id);
   }
 
   getById(id: number) {
-    this._clientService.getClientById(id).subscribe(
-      (client: Client) => {
-        this.formClient.patchValue(client);
-        this.completeEmails(client.emails);
-      },
-      (errorService) => {
-        console.log(errorService);
-      }
-    );
+    this._clientService
+      .getClientById(id)
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: (client) => {
+          this.formClient.patchValue(client);
+          this.completeEmails(client.emails);
+        },
+        error: (errorService) => {
+          console.log(errorService);
+        },
+      });
   }
 
   /*Gestion de emails*/
@@ -122,6 +128,7 @@ export class ClientDetailComponent implements OnInit {
     if (email.id_email) {
       this._emailService
         .deleteEmail(email)
+        .pipe(takeUntilDestroyed(this._destroyRef))
         .subscribe(() =>
           this._utilsServices.presentSaveToast(true, 'Borrado correctamente')
         );
@@ -136,16 +143,23 @@ export class ClientDetailComponent implements OnInit {
     if (this.formClient.valid) {
       let client = this.formClient.getRawValue() as Client;
       console.log(client);
-      this._clientService.saveClient(client).subscribe({
-        next: (client) => {
-          this.formClient.patchValue(client);
-          this._utilsServices.presentSaveToast(true, 'Guardado correctamente');
-        },
-        error: (errorService) => {
-          this._utilsServices.presentSaveToast(false, 'Error');
-          console.log(errorService);
-        },
-      });
+      this._clientService
+        .saveClient(client)
+        .pipe(takeUntilDestroyed(this._destroyRef))
+        .subscribe({
+          next: (client) => {
+            this.formClient.patchValue(client);
+            this._utilsServices.presentSaveToast(
+              true,
+              'Guardado correctamente'
+            );
+            this._router.navigate(['/dashboard/client']);
+          },
+          error: (errorService) => {
+            this._utilsServices.presentSaveToast(false, 'Error');
+            console.log(errorService);
+          },
+        });
     }
   }
 }

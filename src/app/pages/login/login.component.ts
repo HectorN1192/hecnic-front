@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Endpoints } from '@core/enums';
@@ -37,6 +38,7 @@ import {
   ],
 })
 export class LoginComponent {
+  private readonly _destroyRef = inject(DestroyRef);
   private readonly _router = inject(Router);
   private readonly _authService = inject(AuthService);
   private readonly _tokenService = inject(TokenService);
@@ -50,12 +52,15 @@ export class LoginComponent {
   login() {
     const user = this.formLogin.getRawValue();
     if (user.name) {
-      this._authService.login(user).subscribe((data) => {
-        this._tokenService.setToken(data.token);
-        this._tokenService.setUserName(data.name);
-        this._tokenService.setAuthorities(data.authorities);
-        this._router.navigate([Endpoints.DASHBOARD]);
-      });
+      this._authService
+        .login(user)
+        .pipe(takeUntilDestroyed(this._destroyRef))
+        .subscribe((data) => {
+          this._tokenService.setToken(data.token);
+          this._tokenService.setUserName(data.name);
+          this._tokenService.setAuthorities(data.authorities);
+          this._router.navigate([Endpoints.DASHBOARD]);
+        });
     } else {
       this._router.navigate([Endpoints.DASHBOARD]);
     }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonRouterOutlet } from '@ionic/angular/standalone';
+import { SpinnerComponent } from '@shared/components';
 import { addIcons } from 'ionicons';
 import {
   archiveOutline,
@@ -22,7 +23,7 @@ import {
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  imports: [IonRouterOutlet],
+  imports: [IonRouterOutlet, SpinnerComponent],
 })
 export class AppComponent {
   public appPages = [

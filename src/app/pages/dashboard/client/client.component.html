@@ -16,18 +16,19 @@
           label="Buscar cliente"
           labelPlacement="floating"
           placeholder="Buscar cliente"
+          (keyup)="updateFilter($event)"
         ></ion-input>
       </ion-item>
     </ion-col>
   </ion-row>
-
+  @if (rows$ |async; as rows) {
   <ngx-datatable
     #table
     class="material"
     [messages]="{ emptyMessage: 'No hay clientes con ese filtro' }"
     [scrollbarH]="true"
     [limit]="10"
-    [rows]="clientsRows$ | async"
+    [rows]="rows"
     [rowHeight]="50"
     [columns]="columns"
     [columnMode]="'force'"
@@ -37,6 +38,7 @@
     [footerHeight]="50"
   >
   </ngx-datatable>
+  }
 
   <ng-template #actions let-row="row" let-value="value" let-i="index">
     <div class="btn-actions">
@@ -56,6 +58,7 @@
         class="icon-actions"
         slot="icon-only"
         name="trash-outline"
+        (click)="presentAlertDelete(row)"
       ></ion-icon>
     </div>
   </ng-template>
