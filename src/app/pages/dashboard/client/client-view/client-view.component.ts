@@ -53,11 +53,8 @@ import {
   templateUrl: './client-view.component.html',
   styleUrls: ['./client-view.component.scss'],
   imports: [
-    IonButtons,
     IonCol,
     IonContent,
-    IonHeader,
-    IonBackButton,
     IonRow,
     IonTitle,
     IonToolbar,
@@ -73,6 +70,9 @@ import {
     NgxDatatableModule,
     CurrencyPipe,
     AsyncPipe,
+    IonHeader,
+    IonButtons,
+    IonBackButton,
   ],
 })
 export class ClientViewComponent implements OnInit {

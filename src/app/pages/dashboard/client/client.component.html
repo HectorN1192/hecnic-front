@@ -43,18 +43,21 @@
   <ng-template #actions let-row="row" let-value="value" let-i="index">
     <div class="btn-actions">
       <ion-icon
+        tabindex="-1"
         class="icon-actions"
         slot="start"
         [name]="'create-outline'"
         [routerLink]="[RouteActions.EDIT, row.id_client]"
       ></ion-icon>
       <ion-icon
+        tabindex="-1"
         class="icon-actions"
         slot="icon-only"
         name="eye-outline"
         [routerLink]="[RouteActions.VIEW, row.id_client]"
       ></ion-icon>
       <ion-icon
+        tabindex="-1"
         class="icon-actions"
         slot="icon-only"
         name="trash-outline"

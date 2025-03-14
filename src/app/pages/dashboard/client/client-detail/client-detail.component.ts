@@ -142,7 +142,6 @@ export class ClientDetailComponent implements OnInit {
   submit() {
     if (this.formClient.valid) {
       let client = this.formClient.getRawValue() as Client;
-      console.log(client);
       this._clientService
         .saveClient(client)
         .pipe(takeUntilDestroyed(this._destroyRef))

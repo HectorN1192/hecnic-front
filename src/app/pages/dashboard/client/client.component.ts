@@ -28,7 +28,13 @@ import {
 } from '@swimlane/ngx-datatable';
 import { addIcons } from 'ionicons';
 import { createOutline, eyeOutline, trashOutline } from 'ionicons/icons';
-import { debounceTime, distinctUntilChanged, map, of, Subject } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  Observable,
+  Subject,
+} from 'rxjs';
 
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
@@ -55,17 +61,16 @@ export class ClientComponent implements OnInit {
   private actionsTemplate!: TemplateRef<any>;
 
   private readonly _alertController = inject(AlertController);
-  clientService = inject(ClientService);
+  private readonly _clientService = inject(ClientService);
 
-  RouteActions = RouteActions;
-  sortType = SortType;
+  private readonly _searchSubject = new Subject<string>();
 
-  clientsRows$ = of<Client[]>([]);
-  rows$ = this.clientsRows$;
-
+  private _clientsRows$!: Observable<Client[]>;
+  public rows$!: Observable<Client[]>;
   public columns: any;
 
-  searchSubject = new Subject<string>();
+  public RouteActions = RouteActions;
+  public sortType = SortType;
 
   ngOnInit(): void {
     this.columns = [
@@ -91,7 +96,7 @@ export class ClientComponent implements OnInit {
       trashOutline,
     });
 
-    this.searchSubject
+    this._searchSubject
       .pipe(
         debounceTime(500),
         distinctUntilChanged(),
@@ -106,17 +111,17 @@ export class ClientComponent implements OnInit {
   }
 
   getClients() {
-    this.clientsRows$ = this.clientService.getClient();
-    this.rows$ = this.clientsRows$;
+    this._clientsRows$ = this._clientService.getClient();
+    this.rows$ = this._clientsRows$;
   }
 
   updateFilter(event: any) {
     const val = event?.target?.value;
-    this.searchSubject.next(val);
+    this._searchSubject.next(val);
   }
 
   filterClients(val: string) {
-    this.rows$ = this.clientsRows$.pipe(
+    this.rows$ = this._clientsRows$.pipe(
       map((clients) =>
         clients.filter(
           (client: Client) => client.name.toLowerCase().includes(val) || !val
@@ -151,7 +156,7 @@ export class ClientComponent implements OnInit {
   }
 
   deleteClient(client: Client) {
-    this.clientService.deleteClient(client).subscribe({
+    this._clientService.deleteClient(client).subscribe({
       next: () => {
         this.rows$ = this.rows$.pipe(
           map((rows) => rows.filter((c) => c.id_client !== client.id_client))
