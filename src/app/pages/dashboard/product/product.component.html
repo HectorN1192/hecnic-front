@@ -15,6 +15,7 @@
           label="Buscar producto"
           labelPlacement="floating"
           placeholder="Buscar producto"
+          [(ngModel)]="filterProduct"
           (keyup)="updateFilter($event)"
         ></ion-input>
       </ion-item>

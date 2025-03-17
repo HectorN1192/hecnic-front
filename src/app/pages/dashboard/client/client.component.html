@@ -16,6 +16,7 @@
           label="Buscar cliente"
           labelPlacement="floating"
           placeholder="Buscar cliente"
+          [(ngModel)]="filterClient"
           (keyup)="updateFilter($event)"
         ></ion-input>
       </ion-item>

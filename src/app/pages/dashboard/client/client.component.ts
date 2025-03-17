@@ -37,6 +37,7 @@ import {
 } from 'rxjs';
 
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
@@ -53,6 +54,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     IonRow,
     NgxDatatableModule,
     RouterLink,
+    FormsModule,
   ],
 })
 export class ClientComponent implements OnInit {
@@ -71,6 +73,7 @@ export class ClientComponent implements OnInit {
 
   public RouteActions = RouteActions;
   public sortType = SortType;
+  public filterClient!: string;
 
   ngOnInit(): void {
     this.columns = [
@@ -108,6 +111,7 @@ export class ClientComponent implements OnInit {
 
   ionViewWillEnter() {
     this.getClients();
+    this.filterClient = '';
   }
 
   getClients() {

@@ -7,6 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Product } from '@core/dtos';
 import { RouteActions } from '@core/enums';
@@ -56,6 +57,7 @@ import {
     HeaderPageComponent,
     NgxDatatableModule,
     AsyncPipe,
+    FormsModule,
   ],
 })
 export class ProductComponent implements OnInit {
@@ -70,11 +72,13 @@ export class ProductComponent implements OnInit {
   private readonly _moneyPipe = new EuroPipe();
 
   private _productRows$!: Observable<Product[]>;
+
   public columns: TableColumn[] = [];
   public rows$!: Observable<Product[]>;
 
   public RouteActions = RouteActions;
   public sortType = SortType;
+  public filterProduct!: string;
 
   constructor() {
     addIcons({
@@ -89,12 +93,13 @@ export class ProductComponent implements OnInit {
         takeUntilDestroyed(),
         map((val) => val.toLowerCase())
       )
-      .subscribe((val) => this.filterProduct(val));
+      .subscribe((val) => this.filterProducts(val));
   }
 
   ionViewWillEnter() {
     this._productRows$ = this._productService.getProduct();
     this.rows$ = this._productRows$;
+    this.filterProduct = '';
   }
 
   ngOnInit() {
@@ -159,7 +164,7 @@ export class ProductComponent implements OnInit {
     this._searchSubject.next(val);
   }
 
-  filterProduct(val: string) {
+  filterProducts(val: string) {
     this.rows$ = this._productRows$.pipe(
       map((products) =>
         products.filter(

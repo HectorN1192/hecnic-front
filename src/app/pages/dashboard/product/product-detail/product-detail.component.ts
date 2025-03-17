@@ -44,7 +44,7 @@ export class ProductDetailComponent implements OnInit {
   formProduct = this._formBuilder.group({
     id_product: [0],
     name: ['', Validators.required],
-    description: ['', Validators.required],
+    description: [''],
     price: [0, Validators.required],
   });
 
@@ -72,16 +72,5 @@ export class ProductDetailComponent implements OnInit {
         console.log(errorService);
       },
     });
-
-    this._productService.saveProduct(product).subscribe(
-      () => {
-        this.formProduct.reset();
-        this._utilsServices.presentSaveToast(true, 'Guardado correctamente');
-      },
-      (errorService) => {
-        this._utilsServices.presentSaveToast(false, 'Error');
-        console.log(errorService);
-      }
-    );
   }
 }
