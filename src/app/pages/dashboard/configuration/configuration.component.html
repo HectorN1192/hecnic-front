@@ -1,3 +1,54 @@
 <app-header-page title="Configuración" />
 
-<ion-content class="ion-padding"></ion-content>
+<ion-content class="ion-padding">
+  <form [formGroup]="formParams" (ngSubmit)="submit()">
+    <ion-item>
+      <ion-input
+        type="text"
+        label="Numero de cuenta"
+        labelPlacement="floating"
+        placeholder="Numero de cuenta"
+        formControlName="account_number"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        type="text"
+        label="M3 de hormigón en excesos de cimnetación y muros"
+        labelPlacement="floating"
+        placeholder="M3 de hormigón en excesos de cimnetación y muros"
+        formControlName="excess_cement"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        type="text"
+        label="Horas de operario por administración sin herramienta"
+        labelPlacement="floating"
+        placeholder="Horas de operario por administración sin herramienta"
+        formControlName="hours_without_tools"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        type="text"
+        label="Horas de operario por administración con herramienta"
+        labelPlacement="floating"
+        placeholder="Horas de operario por administración con herramienta"
+        formControlName="hours_with_tools"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        type="text"
+        label="Texto de sujeto pasivo"
+        labelPlacement="floating"
+        placeholder="Texto de sujeto pasivo"
+        formControlName="passive_subject"
+      ></ion-input>
+    </ion-item>
+    <ion-button expand="block" type="submit" [disabled]="formParams.invalid">
+      Guardar
+    </ion-button>
+  </form>
+</ion-content>

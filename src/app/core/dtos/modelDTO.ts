@@ -165,8 +165,10 @@ export interface SummaryPDF {
 }
 
 export interface ParamsConfiguration {
+  id_param: number;
   excess_cement: number;
   hours_without_tools: number;
   hours_with_tools: number;
   account_number: string;
+  passive_subject: string;
 }
