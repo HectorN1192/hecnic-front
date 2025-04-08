@@ -1,0 +1,9 @@
+:host {
+  display: block;
+}
+
+.selectable__item {
+  &__list {
+    cursor: pointer;
+  }
+}

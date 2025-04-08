@@ -1,0 +1,36 @@
+<ion-item class="selectable__item" (click)="setOpen(true)">
+  <ion-input
+    type="text"
+    [label]="placeholder"
+    labelPlacement="floating"
+    [placeholder]="placeholder"
+    [value]="getSelectedLabel()"
+  ></ion-input>
+</ion-item>
+
+<ion-modal [isOpen]="isModalOpen" (didDismiss)="setOpen(false)">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Selecciona</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="setOpen(false)">Cerrar</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+      <ion-searchbar
+        [(ngModel)]="searchTerm"
+        placeholder="Buscar..."
+      ></ion-searchbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        @for (item of filteredItems; track $index) {
+        <ion-item class="selectable__item__list" (click)="selectItem(item)">
+          {{ item[labelKey] }}
+        </ion-item>
+        }
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>

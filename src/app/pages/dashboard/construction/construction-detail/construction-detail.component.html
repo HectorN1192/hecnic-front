@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Editar la Obra</ion-title>
+    <ion-title>Datos la Obra</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -121,22 +121,17 @@
     </ion-row>
     <ion-row>
       <ion-col size="12">
-        <ion-item>
-          <ion-label position="floating">Cliente</ion-label>
-          <!-- <ion-selectable
-            formControlName="client"
-            closeButtonSlot="start"
-            closeButtonText="Cerrar"
-            searchPlaceholder="Buscar"
-            itemValueField="id_client"
-            itemTextField="name"
-            [items]="clients"
-            [canSearch]="true"
-            [shouldFocusSearchbar]="true"
-            [searchFailText]="'No existe ese cliente'"
-          >
-          </ion-selectable> -->
-        </ion-item>
+        @if (clients$ | async; as clients) {
+        <app-selectable
+          [items]="clients"
+          labelKey="name"
+          valueKey="id_client"
+          placeholder="Cliente"
+          [selectedValue]="clientSelected"
+          (selectionChange)="onClientSelected($event)"
+        >
+        </app-selectable>
+        }
       </ion-col>
     </ion-row>
     <ion-button

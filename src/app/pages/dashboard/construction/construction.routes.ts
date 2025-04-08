@@ -26,8 +26,8 @@ export const construction_routes: Routes = [
   {
     path: RouteActions.VIEW_ID,
     loadComponent: () =>
-      import('./construction-detail/construction-detail.component').then(
-        (m) => m.ConstructionDetailComponent
+      import('./construction-view/construction-view.component').then(
+        (m) => m.ConstructionViewComponent
       ),
   },
   {
