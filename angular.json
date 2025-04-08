@@ -67,9 +67,6 @@
                 "input": "node_modules/@ionic/angular/css/flex-utils.css"
               },
               {
-                "input": "src/theme/variables.css"
-              },
-              {
                 "input": "node_modules/@swimlane/ngx-datatable/index.css"
               },
               {
