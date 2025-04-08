@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="/dashboard/client"></ion-back-button>
     </ion-buttons>
     <ion-title>Datos del cliente</ion-title>
   </ion-toolbar>
@@ -21,20 +21,20 @@
         <ion-card>
           <ion-card-header>
             <ion-card-title>Facturación Total</ion-card-title>
-            <ion-card-content>
-              {{ totalsClient.total_invoices | currency : "EUR" }}
-            </ion-card-content>
           </ion-card-header>
+          <ion-card-content>
+            {{ totalsClient.total_invoices | currency : "EUR" }}
+          </ion-card-content>
         </ion-card>
       </ion-col>
       <ion-col size-xs="12" size-sm="6">
         <ion-card>
           <ion-card-header>
             <ion-card-title>Total Retenciones</ion-card-title>
-            <ion-card-content>
-              {{ totalsClient.total_retentions | currency : "EUR" }}
-            </ion-card-content>
           </ion-card-header>
+          <ion-card-content>
+            {{ totalsClient.total_retentions | currency : "EUR" }}
+          </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
@@ -43,20 +43,20 @@
         <ion-card>
           <ion-card-header>
             <ion-card-title>Retenciones Cobradas</ion-card-title>
-            <ion-card-content>
-              {{ totalsClient.total_retentions_receive | currency : "EUR" }}
-            </ion-card-content>
           </ion-card-header>
+          <ion-card-content>
+            {{ totalsClient.total_retentions_receive | currency : "EUR" }}
+          </ion-card-content>
         </ion-card>
       </ion-col>
       <ion-col size-xs="12" size-sm="6">
         <ion-card>
           <ion-card-header>
             <ion-card-title>Retenciones Pendientes</ion-card-title>
-            <ion-card-content>
-              {{ totalsClient.total_retentions_pending | currency : "EUR" }}
-            </ion-card-content>
           </ion-card-header>
+          <ion-card-content>
+            {{ totalsClient.total_retentions_pending | currency : "EUR" }}
+          </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>

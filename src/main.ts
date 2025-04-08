@@ -26,7 +26,7 @@ bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'es-ES' },
-    provideIonicAngular(),
+    provideIonicAngular({ mode: 'md' }),
     provideHttpClient(withInterceptors([authInterceptor, spinnerInterceptor])),
     provideRouter(
       routes,
