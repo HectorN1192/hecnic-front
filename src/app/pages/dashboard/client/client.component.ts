@@ -25,6 +25,7 @@ import {
   DatatableComponent,
   NgxDatatableModule,
   SortType,
+  TableColumn,
 } from '@swimlane/ngx-datatable';
 import { addIcons } from 'ionicons';
 import { createOutline, eyeOutline, trashOutline } from 'ionicons/icons';
@@ -64,12 +65,11 @@ export class ClientComponent implements OnInit {
 
   private readonly _alertController = inject(AlertController);
   private readonly _clientService = inject(ClientService);
-
   private readonly _searchSubject = new Subject<string>();
 
   private _clientsRows$!: Observable<Client[]>;
   public rows$!: Observable<Client[]>;
-  public columns: any;
+  public columns!: TableColumn[];
 
   public RouteActions = RouteActions;
   public sortType = SortType;

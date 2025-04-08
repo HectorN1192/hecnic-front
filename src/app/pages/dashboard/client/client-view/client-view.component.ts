@@ -112,7 +112,7 @@ export class ClientViewComponent implements OnInit {
         takeUntilDestroyed(),
         map((val) => val.toLowerCase())
       )
-      .subscribe((val) => this.filterClients(val));
+      .subscribe((val) => this.filterConstructions(val));
   }
 
   ngOnInit() {
@@ -178,10 +178,10 @@ export class ClientViewComponent implements OnInit {
     this.searchSubject.next(val);
   }
 
-  filterClients(val: string) {
+  filterConstructions(val: string) {
     this.rows = this.constructionsPending.filter(
       (construction: Construction) =>
-        construction.name.toLowerCase().includes(val) || !val
+        construction.name?.toLowerCase().includes(val) || !val
     );
 
     this.table.offset = 0;

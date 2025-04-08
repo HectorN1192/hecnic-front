@@ -40,21 +40,21 @@ export interface Product {
 }
 
 export interface Construction {
-  id_construction: number;
-  name: string;
-  address: string;
-  city: string;
-  province: string;
-  postal_code: string;
-  half_retention: number;
-  total_retention: number;
-  half_retention_receive: boolean;
-  total_retention_receive: boolean;
-  start_date: Date;
-  end_date: Date;
-  client: Client;
-  invoices: Invoice[];
-  request_retention: RequestRetention[];
+  id_construction?: number;
+  name?: string;
+  address?: string;
+  city?: string;
+  province?: string;
+  postal_code?: string;
+  half_retention?: number;
+  total_retention?: number;
+  half_retention_receive?: boolean;
+  total_retention_receive?: boolean;
+  start_date?: string;
+  end_date?: string;
+  client?: Client;
+  invoices?: Invoice[];
+  request_retention?: RequestRetention[];
 }
 
 export interface Invoice {

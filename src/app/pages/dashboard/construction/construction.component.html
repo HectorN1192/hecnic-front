@@ -1,3 +1,68 @@
 <app-header-page title="Obras" />
 
-<ion-content class="ion-padding"></ion-content>
+<ion-content class="ion-padding">
+  <ion-row>
+    <ion-col size="12">
+      <ion-button [routerLink]="RouteActions.CREATE" expand="block">
+        Nueva obra
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size="12">
+      <ion-item>
+        <ion-input
+          label="Buscar obra"
+          labelPlacement="floating"
+          placeholder="Buscar obra"
+          [(ngModel)]="filterConstruction"
+          (keyup)="updateFilter($event)"
+        ></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  @if (rows$ |async; as rows) {
+  <ngx-datatable
+    #table
+    class="material"
+    [messages]="{ emptyMessage: 'No hay obras con ese filtro' }"
+    [scrollbarH]="true"
+    [limit]="10"
+    [rows]="rows"
+    [rowHeight]="50"
+    [columns]="columns"
+    [columnMode]="'force'"
+    [sorts]="[{ prop: 'start_date', dir: 'desc' }]"
+    [sortType]="sortType.multi"
+    [headerHeight]="50"
+    [footerHeight]="50"
+  >
+  </ngx-datatable>
+  }
+  <ng-template #actions let-row="row" let-value="value" let-i="index">
+    <div class="btn-actions">
+      <ion-icon
+        tabindex="-1"
+        class="icon-actions"
+        slot="icon-only"
+        name="create-outline"
+        [routerLink]="[RouteActions.EDIT, row.id_construction]"
+      ></ion-icon>
+      <ion-icon
+        tabindex="-1"
+        class="icon-actions"
+        slot="icon-only"
+        name="eye-outline"
+        [routerLink]="[RouteActions.VIEW, row.id_construction]"
+      ></ion-icon>
+      <ion-icon
+        tabindex="-1"
+        class="icon-actions"
+        slot="icon-only"
+        name="trash-outline"
+        (click)="presentAlertDelete(row)"
+      ></ion-icon>
+    </div>
+  </ng-template>
+</ion-content>

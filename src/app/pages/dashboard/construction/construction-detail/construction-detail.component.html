@@ -1,3 +1,150 @@
-<app-header-page title="Datos de la obra" />
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Editar la Obra</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-<ion-content class="ion-padding"></ion-content>
+<ion-content class="ion-padding">
+  <form [formGroup]="formConstruction" (ngSubmit)="submit()">
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-input
+            type="text"
+            label="Nombre"
+            labelPlacement="floating"
+            placeholder="Nombre"
+            formControlName="name"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-input
+            type="text"
+            label="Dirección"
+            labelPlacement="floating"
+            placeholder="Dirección"
+            formControlName="address"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-xs="12" size-md="4">
+        <ion-item>
+          <ion-input
+            type="text"
+            label="Provincia"
+            labelPlacement="floating"
+            placeholder="Provincia"
+            formControlName="province"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xs="12" size-md="4">
+        <ion-item>
+          <ion-input
+            type="text"
+            label="Ciudad"
+            labelPlacement="floating"
+            placeholder="Ciudad"
+            formControlName="city"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xs="12" size-md="4">
+        <ion-item>
+          <ion-input
+            type="text"
+            label="Código Postal"
+            labelPlacement="floating"
+            placeholder="Código Postal"
+            formControlName="postal_code"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size-xs="12" size-md="6">
+        <div class="date-picker">
+          <ion-item>
+            <ion-label for="fechainicion">Fecha comienzo de obra</ion-label>
+            <ion-datetime-button datetime="datetimeStart"></ion-datetime-button>
+
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime
+                  id="datetimeStart"
+                  presentation="date"
+                  [showDefaultButtons]="true"
+                  doneText="Aceptar"
+                  cancelText="Cancelar"
+                  [showDefaultTitle]="true"
+                  formControlName="start_date"
+                >
+                  <span slot="title">Fecha comienzo de obra</span></ion-datetime
+                >
+              </ng-template>
+            </ion-modal>
+          </ion-item>
+        </div>
+      </ion-col>
+      <ion-col size-xs="12" size-md="6">
+        <ion-item>
+          <ion-label for="fechafin">Fecha fin de obra</ion-label>
+          <ion-datetime-button datetime="datetimeEnd"></ion-datetime-button>
+
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime
+                id="datetimeEnd"
+                presentation="date"
+                [showDefaultButtons]="true"
+                doneText="Aceptar"
+                cancelText="Cancelar"
+                [showDefaultTitle]="true"
+                formControlName="end_date"
+              >
+                <span slot="title">Fecha fin de obra</span></ion-datetime
+              >
+            </ng-template>
+          </ion-modal>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="floating">Cliente</ion-label>
+          <!-- <ion-selectable
+            formControlName="client"
+            closeButtonSlot="start"
+            closeButtonText="Cerrar"
+            searchPlaceholder="Buscar"
+            itemValueField="id_client"
+            itemTextField="name"
+            [items]="clients"
+            [canSearch]="true"
+            [shouldFocusSearchbar]="true"
+            [searchFailText]="'No existe ese cliente'"
+          >
+          </ion-selectable> -->
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-button
+      [disabled]="formConstruction.invalid"
+      expand="full"
+      type="submit"
+    >
+      Guardar
+    </ion-button>
+  </form>
+</ion-content>
