@@ -54,9 +54,7 @@
               {
                 "input": "node_modules/@ionic/angular/css/padding.css"
               },
-              {
-                "input": "node_modules/@ionic/angular/css/float-elements.css"
-              },
+
               {
                 "input": "node_modules/@ionic/angular/css/text-alignment.css"
               },
