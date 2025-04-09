@@ -90,9 +90,6 @@ export class ClientDetailComponent implements OnInit {
           this.formClient.patchValue(client);
           this.completeEmails(client.emails);
         },
-        error: (errorService) => {
-          console.log(errorService);
-        },
       });
   }
 
@@ -153,10 +150,6 @@ export class ClientDetailComponent implements OnInit {
               'Guardado correctamente'
             );
             this._router.navigate(['/dashboard/client']);
-          },
-          error: (errorService) => {
-            this._utilsServices.presentSaveToast(false, 'Error');
-            console.log(errorService);
           },
         });
     }

@@ -1,5 +1,11 @@
 import { AsyncPipe, DatePipe } from '@angular/common';
-import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -60,6 +66,7 @@ export class ConstructionComponent {
   @ViewChild('actions', { static: true })
   private actionsTemplate!: TemplateRef<any>;
 
+  private readonly _destroyRef = inject(DestroyRef);
   private readonly _alertController = inject(AlertController);
   private readonly _constructionService = inject(ConstructionService);
   private readonly _searchSubject = new Subject<string>();
@@ -103,13 +110,14 @@ export class ConstructionComponent {
     this.columns = [
       {
         prop: 'actions',
+        minWidth: 120,
         maxWidth: 130,
         name: 'Acciones',
         cellTemplate: this.actionsTemplate,
       },
       {
         prop: 'name',
-        maxWidth: 350,
+        minWidth: 350,
         name: 'Obra',
         headerClass: 'text-align-center',
       },
@@ -167,14 +175,14 @@ export class ConstructionComponent {
   }
 
   deleteConstruction(construction: Construction) {
-    this._constructionService.deleteConstruction(construction).subscribe({
-      next: () => {
-        this.getConstructions();
-      },
-      error: (errorService) => {
-        console.log(errorService);
-      },
-    });
+    this._constructionService
+      .deleteConstruction(construction)
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: () => {
+          this.getConstructions();
+        },
+      });
   }
 
   async presentAlertDelete(construction: Construction) {

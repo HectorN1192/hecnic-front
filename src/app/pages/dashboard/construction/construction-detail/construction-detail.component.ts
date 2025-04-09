@@ -1,5 +1,6 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Client, Construction } from '@core/dtos';
@@ -53,43 +54,63 @@ import { SelectableComponent } from '@shared/components';
     AsyncPipe,
   ],
 })
-export class ConstructionDetailComponent {
+export class ConstructionDetailComponent implements OnInit {
+  @Input() id!: number;
+
+  private readonly _destroyRef = inject(DestroyRef);
   private readonly _formbuilder = inject(FormBuilder);
   private readonly _constructionService = inject(ConstructionService);
   private readonly _clientService = inject(ClientService);
   private readonly _utilsServices = inject(UtilsService);
   private readonly _router = inject(Router);
 
-  startDate: string = new Date().toISOString();
+  dateNow: string = new Date().toISOString();
   clientSelected!: Client;
 
   clients$ = this._clientService.getClient();
 
   formConstruction = this._formbuilder.group({
-    id_construction: [undefined],
+    id_construction: [null as number | null],
     name: ['', Validators.required],
     address: [''],
     city: [''],
     province: [''],
     postal_code: [''],
-    start_date: [new Date().toISOString().split('T')[0]],
-    end_date: [new Date().toISOString().split('T')[0]],
+    start_date: [this.dateNow],
+    end_date: [this.dateNow],
     client: [{} as Client | undefined, Validators.required],
   });
 
+  ngOnInit(): void {
+    if (this.id) this.getById(this.id);
+  }
+
+  getById(id: number) {
+    this._constructionService
+      .getConstructionById(id)
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: (construction) => {
+          this.formConstruction.patchValue(construction);
+          this.clientSelected = construction.client!;
+        },
+      });
+  }
+
   submit() {
     let construction = this.formConstruction.getRawValue() as Construction;
-    this._constructionService.saveConstruction(construction).subscribe({
-      next: () => {
-        this._router.navigate([Endpoints.CONSTRUCTION]);
-        this._utilsServices.presentSaveToast(true, 'Guardado correctamente');
-      },
-      error: (error) => {},
-    });
+    this._constructionService
+      .saveConstruction(construction)
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: () => {
+          this._router.navigate([Endpoints.DASHBOARD, Endpoints.CONSTRUCTION]);
+          this._utilsServices.presentSaveToast(true, 'Guardado correctamente');
+        },
+      });
   }
 
   onClientSelected(client: Client) {
-    console.log(client);
     this.formConstruction.controls.client.patchValue(client);
   }
 }

@@ -1,4 +1,5 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Product } from '@core/dtos';
@@ -36,6 +37,7 @@ import {
 export class ProductDetailComponent implements OnInit {
   @Input() id!: any;
 
+  private readonly _destroyRef = inject(DestroyRef);
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _productService = inject(ProductService);
   private readonly _router = inject(Router);
@@ -53,24 +55,26 @@ export class ProductDetailComponent implements OnInit {
   }
 
   getById(id: number) {
-    this._productService.getProductById(id).subscribe((product) => {
-      this.formProduct.patchValue(product);
-    });
+    this._productService
+      .getProductById(id)
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe((product) => {
+        this.formProduct.patchValue(product);
+      });
   }
 
   submit() {
     let product = this.formProduct.getRawValue() as Product;
     product = { ...product, description: product.name };
 
-    this._productService.saveProduct(product).subscribe({
-      next: () => {
-        this.formProduct.reset();
-        this._utilsServices.presentSaveToast(true, 'Guardado correctamente');
-      },
-      error: (errorService) => {
-        this._utilsServices.presentSaveToast(false, 'Error');
-        console.log(errorService);
-      },
-    });
+    this._productService
+      .saveProduct(product)
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: () => {
+          this.formProduct.reset();
+          this._utilsServices.presentSaveToast(true, 'Guardado correctamente');
+        },
+      });
   }
 }

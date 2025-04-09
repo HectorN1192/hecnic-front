@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ParamsConfiguration } from '@core/dtos';
 import { ParamsConfigurationService, UtilsService } from '@core/services';
@@ -24,6 +25,7 @@ import { HeaderPageComponent } from '@shared/components';
   ],
 })
 export class ConfigurationComponent {
+  private readonly _destroyRef = inject(DestroyRef);
   private readonly _utilsServices = inject(UtilsService);
   private readonly _formbuilder = inject(FormBuilder);
   private readonly _paramsConfigurationService = inject(
@@ -44,15 +46,14 @@ export class ConfigurationComponent {
   }
 
   getParamsConfiguration() {
-    this._paramsConfigurationService.getParamsConfiguration().subscribe({
-      next: (params) => {
-        console.log(params);
-        this.formParams.patchValue(params[0]);
-      },
-      error: (errorService) => {
-        console.log(errorService);
-      },
-    });
+    this._paramsConfigurationService
+      .getParamsConfiguration()
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: (params) => {
+          this.formParams.patchValue(params[0]);
+        },
+      });
   }
 
   submit() {
@@ -60,16 +61,13 @@ export class ConfigurationComponent {
       let params = this.formParams.getRawValue() as ParamsConfiguration;
       this._paramsConfigurationService
         .saveParamsConfiguration(params)
+        .pipe(takeUntilDestroyed(this._destroyRef))
         .subscribe({
           next: () => {
             this._utilsServices.presentSaveToast(
               true,
               'Guardado correctamente'
             );
-          },
-          error: (errorService) => {
-            this._utilsServices.presentSaveToast(false, 'Error');
-            console.log(errorService);
           },
         });
     }

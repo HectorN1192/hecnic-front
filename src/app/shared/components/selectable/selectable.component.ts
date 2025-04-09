@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  EventEmitter,
+  input,
+  Output,
+  signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   IonButton,
@@ -35,21 +43,38 @@ import {
   ],
 })
 export class SelectableComponent<T extends Record<string, any>> {
-  @Input() items: T[] = [];
-  @Input() labelKey!: string;
-  @Input() valueKey!: string;
-  @Input() placeholder: string = 'Selecciona una opción';
-  @Input() selectedValue?: T;
+  items = input<T[]>([]);
+  labelKey = input<string>('');
+  valueKey = input<string>('');
+  placeholder = input<string>('Selecciona una opción');
+  selectedValueInput = input<T>();
 
   @Output() selectionChange = new EventEmitter<T>();
 
   searchTerm: string = '';
   isModalOpen = false;
 
+  selectedValue = signal<T | undefined>(undefined);
+
+  labelSelected = computed(() => {
+    const found = this.items().find(
+      (item) =>
+        item[this.valueKey() ?? ''] ===
+        this.selectedValue()?.[this.valueKey() ?? '']
+    );
+    return found ? String(found[this.labelKey()]) : '';
+  });
+
+  constructor() {
+    effect(() => {
+      this.selectedValue.set(this.selectedValueInput());
+    });
+  }
+
   get filteredItems(): T[] {
-    if (!this.searchTerm) return this.items;
-    return this.items.filter((item) =>
-      String(item[this.labelKey])
+    if (!this.searchTerm) return this.items();
+    return this.items().filter((item) =>
+      String(item[this.labelKey()])
         .toLowerCase()
         .includes(this.searchTerm.toLowerCase())
     );
@@ -61,15 +86,8 @@ export class SelectableComponent<T extends Record<string, any>> {
   }
 
   selectItem(item: T): void {
-    this.selectedValue = item[this.valueKey];
+    this.selectedValue.set(item);
     this.selectionChange.emit(item);
     this.setOpen(false);
-  }
-
-  getSelectedLabel(): string {
-    const found = this.items.find(
-      (item) => item[this.valueKey] === this.selectedValue
-    );
-    return found ? String(found[this.labelKey]) : '';
   }
 }

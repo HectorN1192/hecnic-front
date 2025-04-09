@@ -1,6 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import {
   Component,
+  DestroyRef,
   inject,
   OnInit,
   TemplateRef,
@@ -63,6 +64,7 @@ export class ClientComponent implements OnInit {
   @ViewChild('actions', { static: true })
   private actionsTemplate!: TemplateRef<any>;
 
+  private readonly _destroyRef = inject(DestroyRef);
   private readonly _alertController = inject(AlertController);
   private readonly _clientService = inject(ClientService);
   private readonly _searchSubject = new Subject<string>();
@@ -137,7 +139,6 @@ export class ClientComponent implements OnInit {
   }
 
   async presentAlertDelete(client: Client) {
-    console.log('deleteClient', client);
     const alert = await this._alertController.create({
       header: 'Borrar!',
       subHeader: '¿Quieres borrar el cliente?',
@@ -160,15 +161,15 @@ export class ClientComponent implements OnInit {
   }
 
   deleteClient(client: Client) {
-    this._clientService.deleteClient(client).subscribe({
-      next: () => {
-        this.rows$ = this.rows$.pipe(
-          map((rows) => rows.filter((c) => c.id_client !== client.id_client))
-        );
-      },
-      error: (errorService) => {
-        console.log(errorService);
-      },
-    });
+    this._clientService
+      .deleteClient(client)
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: () => {
+          this.rows$ = this.rows$.pipe(
+            map((rows) => rows.filter((c) => c.id_client !== client.id_client))
+          );
+        },
+      });
   }
 }

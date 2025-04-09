@@ -1,10 +1,10 @@
 <ion-item class="selectable__item" (click)="setOpen(true)">
   <ion-input
     type="text"
-    [label]="placeholder"
+    [label]="placeholder()"
     labelPlacement="floating"
-    [placeholder]="placeholder"
-    [value]="getSelectedLabel()"
+    [placeholder]="placeholder()"
+    [value]="labelSelected()"
   ></ion-input>
 </ion-item>
 
@@ -27,7 +27,7 @@
       <ion-list>
         @for (item of filteredItems; track $index) {
         <ion-item class="selectable__item__list" (click)="selectItem(item)">
-          {{ item[labelKey] }}
+          {{ item[labelKey()] }}
         </ion-item>
         }
       </ion-list>

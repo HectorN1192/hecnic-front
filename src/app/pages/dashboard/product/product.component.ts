@@ -1,6 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import {
   Component,
+  DestroyRef,
   inject,
   OnInit,
   TemplateRef,
@@ -65,9 +66,9 @@ export class ProductComponent implements OnInit {
   @ViewChild('actions', { static: true })
   private actionsTemplate!: TemplateRef<any>;
 
+  private readonly _destroyRef = inject(DestroyRef);
   private readonly _productService = inject(ProductService);
   private readonly _alertController = inject(AlertController);
-
   private readonly _searchSubject = new Subject<string>();
   private readonly _moneyPipe = new EuroPipe();
 
@@ -145,18 +146,18 @@ export class ProductComponent implements OnInit {
   }
 
   deleteProduct(product: Product) {
-    this._productService.deleteProduct(product).subscribe({
-      next: () => {
-        this.rows$ = this.rows$.pipe(
-          map((products) =>
-            products.filter((p) => p.id_product !== product.id_product)
-          )
-        );
-      },
-      error: () => {
-        console.error('Error');
-      },
-    });
+    this._productService
+      .deleteProduct(product)
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe({
+        next: () => {
+          this.rows$ = this.rows$.pipe(
+            map((products) =>
+              products.filter((p) => p.id_product !== product.id_product)
+            )
+          );
+        },
+      });
   }
 
   updateFilter(event: any) {
