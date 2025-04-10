@@ -1,3 +1,89 @@
 <app-header-page title="Presupuestos" />
 
-<ion-content class="ion-padding"></ion-content>
+<ion-content class="ion-padding">
+  <ion-row>
+    <ion-col size="12">
+      <ion-button [routerLink]="RouteActions.CREATE" expand="block">
+        Nuevo Presupuesto
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size="6">
+      <ion-item>
+        <ion-label position="floating"></ion-label>
+        <ion-input
+          label="Buscar presupuesto"
+          labelPlacement="floating"
+          placeholder="Buscar presupuesto"
+          [(ngModel)]="filterBudget"
+          type="text"
+          (keyup)="updateFilter($event)"
+        ></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col size="6">
+      <app-filter-year
+        [years]="years$ | async"
+        (changeYear)="filterYear($event)"
+      ></app-filter-year>
+    </ion-col>
+  </ion-row>
+
+  @if (rows$ |async; as rows) {
+  <ngx-datatable
+    #table
+    class="material"
+    [messages]="{ emptyMessage: 'No hay presupuestos con ese filtro' }"
+    [scrollbarH]="true"
+    [limit]="10"
+    [rowHeight]="50"
+    [rows]="rows"
+    [columns]="columns"
+    [columnMode]="'force'"
+    [sorts]="[{ prop: 'creationDate', dir: 'asc' }]"
+    [sortType]="sortType.multi"
+    [headerHeight]="50"
+    [footerHeight]="50"
+  >
+  </ngx-datatable>
+  }
+
+  <ng-template #actions let-row="row" let-value="value" let-i="index">
+    <div class="btn-actions">
+      <ion-icon
+        tabindex="-1"
+        class="icon-actions"
+        slot="start"
+        name="copy-outline"
+        aria-label="Copiar anterior"
+        (click)="createInvoiceByBudget(row.id_budget)"
+      ></ion-icon>
+      <ion-icon
+        tabindex="-1"
+        class="icon-actions"
+        slot="start"
+        name="create-outline"
+        aria-label="Editar"
+        [routerLink]="[RouteActions.EDIT, row.id_budget]"
+      ></ion-icon>
+      <ion-icon
+        tabindex="-1"
+        class="icon-actions"
+        slot="start"
+        name="print-outline"
+        aria-label="Imprimir"
+        (click)="createBudgetPDF(row.id_budget, row.client.name)"
+      ></ion-icon>
+      <ion-icon
+        tabindex="-1"
+        class="icon-actions"
+        slot="start"
+        name="mail-open-outline"
+        aria-label="Enviar por email"
+        (click)="sendBudgetPDF(row.id_budget, row.client.emails)"
+      ></ion-icon>
+    </div>
+  </ng-template>
+</ion-content>

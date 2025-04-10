@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title> Emails </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    @for (email of formEmailArray.controls; track $index; let i = $index) {
+    <ion-item>
+      <ion-label>{{ emails[i].email }}</ion-label>
+      <ion-checkbox slot="start" [formControl]="email"></ion-checkbox>
+    </ion-item>
+    }
+  </ion-list>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="full" (click)="sendEmail()"> Enviar email </ion-button>
+  </ion-toolbar>
+</ion-footer>

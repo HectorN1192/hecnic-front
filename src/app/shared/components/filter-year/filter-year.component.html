@@ -1,0 +1,16 @@
+<ion-item>
+  <ion-label position="floating">Año de facturación</ion-label>
+  @if(years()) {
+  <ion-select
+    interface="popover"
+    okText="Aceptar"
+    cancelText="Cancelar"
+    [(ngModel)]="filter"
+    placeholder="Selección año"
+  >
+    @for (year of years(); track $index) {
+    <ion-select-option [value]="year">{{ year }}</ion-select-option>
+    }
+  </ion-select>
+  }
+</ion-item>
