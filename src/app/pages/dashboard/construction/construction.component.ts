@@ -111,8 +111,7 @@ export class ConstructionComponent implements OnInit {
     this.columns = [
       {
         prop: 'actions',
-        minWidth: 120,
-        maxWidth: 130,
+        maxWidth: 100,
         name: 'Acciones',
         cellTemplate: this.actionsTemplate,
       },
@@ -173,42 +172,6 @@ export class ConstructionComponent implements OnInit {
   getConstructions() {
     this._constructionRows$ = this._constructionService.getConstruction();
     this.rows$ = this._constructionRows$;
-  }
-
-  deleteConstruction(construction: Construction) {
-    this._constructionService
-      .deleteConstruction(construction)
-      .pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe({
-        next: () => {
-          this.getConstructions();
-        },
-      });
-  }
-
-  async presentAlertDelete(construction: Construction) {
-    const alert = await this._alertController.create({
-      header: 'Borrar!',
-      subHeader: '¿Quieres borrar la obra?',
-      message: construction.name,
-      buttons: [
-        {
-          text: 'Aceptar',
-          handler: () => {
-            this.deleteConstruction(construction);
-          },
-        },
-        {
-          text: 'Cancelar',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          },
-        },
-      ],
-    });
-
-    await alert.present();
   }
 
   updateFilter(event: any) {
