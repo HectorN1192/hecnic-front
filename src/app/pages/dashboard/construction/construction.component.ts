@@ -3,6 +3,7 @@ import {
   Component,
   DestroyRef,
   inject,
+  OnInit,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
@@ -61,7 +62,7 @@ import {
     FormsModule,
   ],
 })
-export class ConstructionComponent {
+export class ConstructionComponent implements OnInit {
   @ViewChild(DatatableComponent, { static: false }) table!: DatatableComponent;
   @ViewChild('actions', { static: true })
   private actionsTemplate!: TemplateRef<any>;
