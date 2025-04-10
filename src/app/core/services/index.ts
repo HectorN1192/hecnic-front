@@ -5,6 +5,7 @@ export * from './budget.service';
 export * from './client.service';
 export * from './construction.service';
 export * from './email.service';
+export * from './invoice.service';
 export * from './params-configuration.service';
 export * from './pdf/pdf.service';
 export * from './product.service';

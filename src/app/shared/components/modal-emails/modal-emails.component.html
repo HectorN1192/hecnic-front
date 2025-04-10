@@ -2,7 +2,12 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="closeModal()">
-        <ion-icon name="close-outline"></ion-icon>
+        <ion-icon
+          tabindex="-1"
+          slot="start"
+          aria-label="Cerrar"
+          name="close-outline"
+        ></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title> Emails </ion-title>

@@ -49,6 +49,7 @@ import {
   distinctUntilChanged,
   map,
   Observable,
+  shareReplay,
   Subject,
 } from 'rxjs';
 
@@ -79,10 +80,10 @@ export class BudgetComponent implements OnInit {
   private actionsTemplate!: TemplateRef<any>;
 
   private readonly _destroyRef = inject(DestroyRef);
-  private readonly router = inject(Router);
+  private readonly _router = inject(Router);
   private readonly _budgetService = inject(BudgetService);
-  private readonly utilsServices = inject(UtilsService);
-  private readonly modalController = inject(ModalController);
+  private readonly _utilsServices = inject(UtilsService);
+  private readonly _modalController = inject(ModalController);
   private readonly _searchSubject = new Subject<string>();
 
   private euroPipe = new EuroPipe();
@@ -96,7 +97,7 @@ export class BudgetComponent implements OnInit {
   private _budgetRows$!: Observable<Budget[]>;
   public rows$!: Observable<Budget[]>;
 
-  public years$ = this._budgetService.getYears();
+  public years$ = this._budgetService.getYears().pipe(shareReplay(1));
 
   public filterBudget!: string;
 
@@ -165,11 +166,13 @@ export class BudgetComponent implements OnInit {
 
   ionViewWillEnter() {
     this.filterBudget = '';
-    this.getBudgets(this.yearSelected);
+    // this.getBudgets(this.yearSelected);
   }
 
   getBudgets(year: number) {
-    this._budgetRows$ = this._budgetService.getBudgetsByYear(year);
+    this._budgetRows$ = this._budgetService
+      .getBudgetsByYear(year)
+      .pipe(shareReplay(1));
     this.rows$ = this._budgetRows$;
   }
 
@@ -198,9 +201,12 @@ export class BudgetComponent implements OnInit {
   }
 
   createInvoiceByBudget(idBudget: number) {
-    this.router.navigate([Endpoints.INVOICE, RouteActions.CREATE], {
-      queryParams: { idBudget },
-    });
+    this._router.navigate([
+      Endpoints.DASHBOARD,
+      Endpoints.INVOICE,
+      RouteActions.CREATE_INOVICE_BUDGET,
+      idBudget,
+    ]);
   }
 
   createBudgetPDF(id: number, numberBudget: string) {
@@ -220,19 +226,20 @@ export class BudgetComponent implements OnInit {
   }
 
   public async modalEmail(idBudget: number, emails: Email[]) {
-    const modal = await this.modalController.create({
+    const modal = await this._modalController.create({
       component: ModalEmailsComponent,
       componentProps: { emails },
     });
     modal.onDidDismiss().then((response: OverlayEventDetail<Email[]>) => {
-      const emails = response.data as Email[];
-      if (!emails) return;
-      this._budgetService
-        .sendBudgetPDF(idBudget, emails)
-        .pipe(takeUntilDestroyed(this._destroyRef))
-        .subscribe(() =>
-          this.utilsServices.presentSaveToast(true, 'Enviado correctamente')
-        );
+      if (response.data !== undefined) {
+        const emails = response.data;
+        this._budgetService
+          .sendBudgetPDF(idBudget, emails)
+          .pipe(takeUntilDestroyed(this._destroyRef))
+          .subscribe(() =>
+            this._utilsServices.presentSaveToast(true, 'Enviado correctamente')
+          );
+      }
     });
     modal.present();
   }

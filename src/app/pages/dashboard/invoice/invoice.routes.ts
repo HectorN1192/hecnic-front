@@ -24,6 +24,22 @@ export const invoice_routes: Routes = [
       ),
   },
   {
+    path: RouteActions.COPY_ID,
+    title: 'Editar Obra',
+    loadComponent: () =>
+      import('./invoice-detail/invoice-detail.component').then(
+        (m) => m.InvoiceDetailComponent
+      ),
+  },
+  {
+    path: RouteActions.CREATE_INOVICE_BUDGET_ID,
+    title: 'Editar Obra',
+    loadComponent: () =>
+      import('./invoice-detail/invoice-detail.component').then(
+        (m) => m.InvoiceDetailComponent
+      ),
+  },
+  {
     path: '**',
     redirectTo: '',
     pathMatch: 'full',
