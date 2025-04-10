@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuardFn } from '@core/services';
 
 export const routes: Routes = [
   {
@@ -12,7 +13,7 @@ export const routes: Routes = [
       import('./pages/dashboard/dashboard.routes').then(
         (r) => r.dashboard_routes
       ),
-    // canActivate: [authGuardFn],
-    // canActivateChild: [authGuardFn],
+    canActivate: [authGuardFn],
+    canActivateChild: [authGuardFn],
   },
 ];
