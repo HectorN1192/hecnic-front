@@ -1,7 +1,6 @@
 import { AsyncPipe, DatePipe } from '@angular/common';
 import {
   Component,
-  DestroyRef,
   inject,
   OnInit,
   TemplateRef,
@@ -14,7 +13,6 @@ import { Construction } from '@core/dtos';
 import { RouteActions } from '@core/enums';
 import { ConstructionService } from '@core/services';
 import {
-  AlertController,
   IonButton,
   IonCol,
   IonContent,
@@ -67,8 +65,6 @@ export class ConstructionComponent implements OnInit {
   @ViewChild('actions', { static: true })
   private actionsTemplate!: TemplateRef<any>;
 
-  private readonly _destroyRef = inject(DestroyRef);
-  private readonly _alertController = inject(AlertController);
   private readonly _constructionService = inject(ConstructionService);
   private readonly _searchSubject = new Subject<string>();
 

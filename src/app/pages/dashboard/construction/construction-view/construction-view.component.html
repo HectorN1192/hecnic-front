@@ -7,4 +7,116 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding"></ion-content>
+<ion-content class="ion-padding">
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="8">
+        <ion-item>
+          <ion-input
+            type="text"
+            label="Obra"
+            labelPlacement="floating"
+            [value]="construction?.name"
+            readOnly
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-md="4" size-xs="12" class="ion-align-self-center">
+        <ion-button
+          (click)="updateRetentionsConstruction(construction?.id_construction!)"
+          expand="block"
+          >Actualizar datos</ion-button
+        >
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-md="4" size-xs="6">
+        @if( construction?.half_retention == 0 || construction?.half_retention){
+        <ion-item>
+          <ion-input
+            label="Retención 50%"
+            labelPlacement="floating"
+            [value]="construction?.half_retention | euroPipe"
+            readOnly
+          ></ion-input> </ion-item
+        >}
+      </ion-col>
+      <ion-col size-md="4" size-xs="6">
+        <ion-item>
+          <ion-input
+            label="50% cobrado"
+            labelPlacement="floating"
+            [value]="construction?.half_retention_receive | booleanPipe"
+            readOnly
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+      @if(!construction?.half_retention_receive &&
+      construction?.end_date){<ion-col
+        size-md="4"
+        size-xs="12"
+        class="ion-align-self-center"
+      >
+        <ion-button
+          (click)="receiveHalfRetention(construction?.id_construction!)"
+          expand="block"
+          >Cobrado 50%</ion-button
+        > </ion-col
+      >}
+    </ion-row>
+    <ion-row>
+      <ion-col size-md="4" size-xs="6">
+        @if(construction?.total_retention == 0 ||
+        construction?.total_retention){<ion-item>
+          <ion-input
+            label="Retención total"
+            labelPlacement="floating"
+            [value]="construction?.total_retention | euroPipe"
+            readOnly
+          ></ion-input> </ion-item
+        >}
+      </ion-col>
+      <ion-col size-md="4" size-xs="6">
+        <ion-item>
+          <ion-input
+            label="Total cobrado"
+            labelPlacement="floating"
+            [value]="construction?.total_retention_receive | booleanPipe"
+            readOnly
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+      @if(!construction?.total_retention_receive && construction?.end_date) {
+
+      <ion-col size-md="4" size-xs="12" class="ion-align-self-center">
+        <ion-button
+          (click)="receiveTotalRetention(construction?.id_construction!)"
+          expand="block"
+          >Cobrado Total</ion-button
+        >
+      </ion-col>
+      }
+    </ion-row>
+
+    <ion-toolbar class="m-t-10" color="primary">
+      <ion-title slot="start">Facturas</ion-title>
+    </ion-toolbar>
+
+    <ngx-datatable
+      #table
+      class="material"
+      [messages]="{ emptyMessage: 'No hay facturas con ese filtro' }"
+      [scrollbarH]="true"
+      [limit]="8"
+      [rowHeight]="50"
+      [rows]="invoices"
+      [columns]="columns"
+      [columnMode]="'force'"
+      [sorts]="[{ prop: 'creation_date', dir: 'asc' }]"
+      [sortType]="sortType.multi"
+      [headerHeight]="50"
+      [footerHeight]="50"
+    >
+    </ngx-datatable>
+  </ion-grid>
+</ion-content>
