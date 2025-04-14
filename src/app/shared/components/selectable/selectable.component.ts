@@ -8,6 +8,7 @@ import {
   signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TypeSelectableEnum } from '@core/enums';
 import {
   IonButton,
   IonButtons,
@@ -18,6 +19,7 @@ import {
   IonList,
   IonModal,
   IonSearchbar,
+  IonTextarea,
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
@@ -28,6 +30,7 @@ import {
   styleUrls: ['./selectable.component.scss'],
   standalone: true,
   imports: [
+    IonTextarea,
     IonInput,
     IonSearchbar,
     IonItem,
@@ -43,11 +46,14 @@ import {
   ],
 })
 export class SelectableComponent<T extends Record<string, any>> {
+  TypeSelectable = TypeSelectableEnum;
+
   items = input<T[]>([]);
   labelKey = input<string>('');
   valueKey = input<string>('');
   placeholder = input<string>('Selecciona una opción');
   selectedValueInput = input<T>();
+  type = input<string>(this.TypeSelectable.INPUT);
 
   @Output() selectionChange = new EventEmitter<T>();
 

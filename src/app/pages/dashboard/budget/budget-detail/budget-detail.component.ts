@@ -88,7 +88,7 @@ export class BudgetDetailComponent implements OnInit {
   products$ = this._productService.getProduct().pipe(shareReplay(1));
 
   formBudget = this._formbuilder.group({
-    id_budget: [0],
+    id_budget: [null as number | null],
     client: [{} as Client, Validators.required],
     construction: [{} as Construction, Validators.required],
     creation_date: [this.dateNow, Validators.required],
@@ -165,7 +165,7 @@ export class BudgetDetailComponent implements OnInit {
     const budget = this.formBudget.getRawValue() as Budget;
     this._budgetService.saveBudget(budget).subscribe((budget) => {
       this._utilsServices.presentSaveToast(true, 'Guardado correctamente');
-      this._router.navigate([Endpoints.BUDGET]);
+      this._router.navigate([Endpoints.DASHBOARD, Endpoints.BUDGET]);
     });
   }
 

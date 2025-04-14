@@ -1,4 +1,6 @@
-<ion-item class="selectable__item" (click)="setOpen(true)">
+<ion-item class="selectable" (click)="setOpen(true)">
+  @if(type() === TypeSelectable.INPUT) {
+
   <ion-input
     type="text"
     [label]="placeholder()"
@@ -6,6 +8,14 @@
     [placeholder]="placeholder()"
     [value]="labelSelected()"
   ></ion-input>
+  } @else if(type() === TypeSelectable.TEXTAREA) {
+  <ion-textarea
+    [label]="placeholder()"
+    labelPlacement="floating"
+    [placeholder]="placeholder()"
+    [value]="labelSelected()"
+  ></ion-textarea>
+  }
 </ion-item>
 
 <ion-modal [isOpen]="isModalOpen" (didDismiss)="setOpen(false)">
@@ -26,8 +36,10 @@
     <ion-content>
       <ion-list>
         @for (item of filteredItems; track $index) {
-        <ion-item class="selectable__item__list" (click)="selectItem(item)">
-          {{ item[labelKey()] }}
+        <ion-item class="selectable__item" (click)="selectItem(item)">
+          <span class="selectable__item__text">
+            {{ item[labelKey()] }}
+          </span>
         </ion-item>
         }
       </ion-list>

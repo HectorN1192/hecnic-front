@@ -192,7 +192,7 @@ export class InvoiceComponent implements OnInit {
 
   ionViewWillEnter() {
     this.filterInvoice = '';
-    // this.getInvoices(this.yearSelected);
+    this.getInvoices(this.yearSelected);
   }
 
   getInvoices(year: number) {

@@ -1,6 +1,7 @@
 import { Component, input, OnInit, output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Product } from '@core/dtos';
+import { TypeSelectableEnum } from '@core/enums';
 import {
   IonCol,
   IonGrid,
@@ -33,6 +34,8 @@ import { trashOutline } from 'ionicons/icons';
   ],
 })
 export class BudgetItemComponent implements OnInit {
+  TypeSelectable = TypeSelectableEnum;
+
   formItem = input<any>();
 
   products = input<Product[] | null>();

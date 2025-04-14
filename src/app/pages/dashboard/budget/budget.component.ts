@@ -166,7 +166,7 @@ export class BudgetComponent implements OnInit {
 
   ionViewWillEnter() {
     this.filterBudget = '';
-    // this.getBudgets(this.yearSelected);
+    this.getBudgets(this.yearSelected);
   }
 
   getBudgets(year: number) {

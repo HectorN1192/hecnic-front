@@ -18,6 +18,7 @@
               placeholder="Producto"
               [selectedValueInput]="formItem().controls.product.value"
               (selectionChange)="onProductSelected($event)"
+              [type]="TypeSelectable.TEXTAREA"
             >
             </app-selectable>
             }
