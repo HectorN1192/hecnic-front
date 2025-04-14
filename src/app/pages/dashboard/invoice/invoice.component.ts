@@ -218,7 +218,7 @@ export class InvoiceComponent implements OnInit {
       map((invoices) =>
         invoices.filter(
           (invoice: Invoice) =>
-            invoice.client.name.toLowerCase().includes(val) || !val
+            invoice.client?.name.toLowerCase().includes(val) || !val
         )
       )
     );

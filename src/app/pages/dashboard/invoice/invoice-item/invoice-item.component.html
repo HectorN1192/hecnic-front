@@ -1,3 +1,79 @@
-<p>
-  invoice-item works!
-</p>
+<form [formGroup]="formItem()">
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12">
+        <div class="item-line">
+          <ion-icon
+            class="ion-align-self-center"
+            slot="end"
+            name="trash-outline"
+            (click)="deteleItem()"
+          ></ion-icon>
+          <ion-item-sliding>
+            @if (products()) {
+            <app-selectable
+              [items]="products() ?? []"
+              labelKey="name"
+              valueKey="id_product"
+              placeholder="Concepto"
+              [selectedValueInput]="formItem().controls.product.value"
+              (selectionChange)="onProductSelected($event)"
+              [type]="TypeSelectable.TEXTAREA"
+            >
+            </app-selectable>
+            }
+          </ion-item-sliding>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="3">
+        <ion-item>
+          <ion-input
+            type="number"
+            label="Origen"
+            labelPlacement="floating"
+            placeholder="Origen"
+            formControlName="unit_origin"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="3">
+        <ion-item>
+          <ion-input
+            type="number"
+            label="Anterior"
+            labelPlacement="floating"
+            placeholder="Anterior"
+            formControlName="unit_last"
+            readOnly
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="3">
+        <ion-item>
+          <ion-input
+            type="number"
+            label="Total"
+            labelPlacement="floating"
+            placeholder="Total"
+            formControlName="unit_total"
+            readOnly
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="3">
+        <ion-item>
+          <ion-input
+            type="number"
+            label="Precio"
+            labelPlacement="floating"
+            placeholder="Precio"
+            formControlName="price"
+            readOnly
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</form>

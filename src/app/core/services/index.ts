@@ -7,6 +7,7 @@ export * from './construction.service';
 export * from './email.service';
 export * from './invoice.service';
 export * from './item-budget.service';
+export * from './item-invoice.service';
 export * from './params-configuration.service';
 export * from './pdf/pdf.service';
 export * from './product.service';

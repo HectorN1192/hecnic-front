@@ -64,34 +64,39 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      <div>
-        <ion-toolbar color="primary">
-          <ion-title slot="start">Lineas de presupuesto</ion-title>
-        </ion-toolbar>
 
-        <ng-container formArrayName="items">
-          @for (itemControl of itemsFormArray.controls; track $index) {
-          <ng-container [formGroupName]="$index">
-            <app-budget-item
-              [formItem]="itemControl"
-              [products]="products$ | async"
-              (deleteItem)="removeItem($index, itemControl)"
-            ></app-budget-item>
-          </ng-container>
-          }
+      <ion-toolbar color="primary">
+        <ion-title slot="start">Lineas de presupuesto</ion-title>
+      </ion-toolbar>
+
+      <ng-container formArrayName="items">
+        @for (itemControl of itemsFormArray.controls; track $index) {
+        <ng-container [formGroupName]="$index">
+          <app-budget-item
+            [formItem]="itemControl"
+            [products]="products$ | async"
+            (deleteItem)="removeItem($index, itemControl)"
+          ></app-budget-item>
         </ng-container>
-        <ion-row>
-          <ion-col size="12">
-            <ion-button class="ion-float-right" (click)="addItem()"
-              >Añadir linea</ion-button
-            >
-          </ion-col>
-        </ion-row>
-      </div>
-
-      <ion-button expand="full" type="submit" [disabled]="formBudget.invalid"
-        >Guardar</ion-button
-      >
+        }
+      </ng-container>
+      <ion-row>
+        <ion-col size="12">
+          <ion-button class="ion-float-right" (click)="addItem()"
+            >Añadir linea</ion-button
+          >
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-button
+            expand="full"
+            type="submit"
+            [disabled]="formBudget.invalid"
+            >Guardar</ion-button
+          >
+        </ion-col>
+      </ion-row>
     </ion-grid>
   </form>
 </ion-content>

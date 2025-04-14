@@ -58,36 +58,36 @@ export interface Construction {
 }
 
 export interface Invoice {
-  type_invoice: InvoiceTypesEnum;
-  id_invoice: number;
-  number_invoice: number;
-  total_origin: number;
-  total_last: number;
-  total_net: number;
-  advance: number;
-  iva: number;
-  iva_percent: number;
-  retention: number;
-  retention_percent: number;
-  pay_soon: number;
-  pay_soon_percent: number;
-  observation: string;
-  creation_date: Date;
-  items: ItemInvoice[];
-  construction: Construction;
-  client: Client;
-  number_invoice_format: string;
+  invoice_type?: InvoiceTypesEnum;
+  id_invoice?: number;
+  number_invoice?: number;
+  total_origin?: number;
+  total_last?: number;
+  total_net?: number;
+  advance?: number;
+  iva?: number;
+  iva_percent?: number;
+  retention?: number;
+  retention_percent?: number;
+  pay_soon?: number;
+  pay_soon_percent?: number;
+  observation?: string;
+  creation_date?: string;
+  items?: ItemInvoice[];
+  construction?: Construction;
+  client?: Client;
+  number_invoice_format?: string;
 }
 
 export interface ItemInvoice {
-  id_item_invoice: number;
-  unit_origin: number;
-  unit_last: number;
-  unit_total: number;
-  price: number;
-  product: Product;
-  invoice: Invoice;
-  not_contract: boolean;
+  id_item_invoice?: number;
+  unit_origin?: number;
+  unit_last?: number;
+  unit_total?: number;
+  price?: number;
+  product?: Product;
+  invoice?: Invoice;
+  not_contract?: boolean;
 }
 
 export interface Employee {
@@ -141,7 +141,7 @@ export interface Budget {
   id_budget?: number;
   client?: Client;
   construction?: Construction;
-  creationDate?: Date;
+  creation_date?: string;
   items?: ItemBudget[];
   observation?: string;
   iva?: number;

@@ -9,7 +9,7 @@ export const invoice_routes: Routes = [
   },
   {
     path: RouteActions.CREATE,
-    title: 'Crear Obra',
+    title: 'Crear Factura',
     loadComponent: () =>
       import('./invoice-detail/invoice-detail.component').then(
         (m) => m.InvoiceDetailComponent
@@ -17,7 +17,8 @@ export const invoice_routes: Routes = [
   },
   {
     path: RouteActions.EDIT_ID,
-    title: 'Editar Obra',
+    title: 'Editar Factura',
+    data: { mode: RouteActions.EDIT },
     loadComponent: () =>
       import('./invoice-detail/invoice-detail.component').then(
         (m) => m.InvoiceDetailComponent
@@ -25,7 +26,8 @@ export const invoice_routes: Routes = [
   },
   {
     path: RouteActions.COPY_ID,
-    title: 'Editar Obra',
+    title: 'Editar Factura',
+    data: { mode: RouteActions.COPY },
     loadComponent: () =>
       import('./invoice-detail/invoice-detail.component').then(
         (m) => m.InvoiceDetailComponent
@@ -33,7 +35,8 @@ export const invoice_routes: Routes = [
   },
   {
     path: RouteActions.CREATE_INOVICE_BUDGET_ID,
-    title: 'Editar Obra',
+    title: 'Editar Factura',
+    data: { mode: RouteActions.CREATE_INOVICE_BUDGET },
     loadComponent: () =>
       import('./invoice-detail/invoice-detail.component').then(
         (m) => m.InvoiceDetailComponent

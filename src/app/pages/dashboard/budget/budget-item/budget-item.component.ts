@@ -9,7 +9,6 @@ import {
   IonInput,
   IonItem,
   IonItemSliding,
-  IonLabel,
   IonRow,
 } from '@ionic/angular/standalone';
 import { SelectableComponent } from '@shared/components';
@@ -25,7 +24,6 @@ import { trashOutline } from 'ionicons/icons';
     IonCol,
     IonInput,
     IonItem,
-    IonLabel,
     IonRow,
     IonGrid,
     IonIcon,
