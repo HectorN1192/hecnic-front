@@ -66,7 +66,6 @@ export class ConstructionDetailComponent implements OnInit {
 
   dateNow: string = new Date().toISOString();
   clientSelected!: Client;
-
   clients$ = this._clientService.getClient();
 
   formConstruction = this._formbuilder.group({

@@ -192,7 +192,7 @@ export class BudgetComponent implements OnInit {
       map((budgets) =>
         budgets.filter(
           (budget: Budget) =>
-            budget.client.name.toLowerCase().includes(val) || !val
+            budget.client?.name.toLowerCase().includes(val) || !val
         )
       )
     );

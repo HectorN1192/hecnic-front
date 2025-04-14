@@ -7,3 +7,14 @@
     cursor: pointer;
   }
 }
+
+ion-item {
+  .item-native .input-wrapper {
+    padding: 10px 0 10px 0 !important;
+  }
+}
+
+ion-item:hover {
+  cursor: pointer;
+  color: rgb(128, 128, 128);
+}

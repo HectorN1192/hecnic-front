@@ -1,3 +1,49 @@
-<p>
-  budget-item works!
-</p>
+<form [formGroup]="formItem()">
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12">
+        <div class="item-line">
+          <ion-icon
+            class="ion-align-self-center"
+            slot="end"
+            name="trash-outline"
+            (click)="deteleItem()"
+          ></ion-icon>
+          <ion-item-sliding>
+            @if (products()) {
+            <app-selectable
+              [items]="products() ?? []"
+              labelKey="name"
+              valueKey="id_product"
+              placeholder="Producto"
+              [selectedValueInput]="formItem().controls.product.value"
+              (selectionChange)="onProductSelected($event)"
+            >
+            </app-selectable>
+            }
+          </ion-item-sliding>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">
+        <ion-item>
+          <ion-label position="floating">Cantidad</ion-label>
+          <ion-input type="number" formControlName="quantity"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="4">
+        <ion-item>
+          <ion-label position="floating">Precio</ion-label>
+          <ion-input type="number" formControlName="price"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="4">
+        <ion-item>
+          <ion-label position="floating">Total</ion-label>
+          <ion-input type="number" formControlName="total" readOnly></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</form>

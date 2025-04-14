@@ -138,16 +138,16 @@ export interface RequestRetention {
 }
 
 export interface Budget {
-  id_budget: number;
-  client: Client;
-  construction: Construction;
-  creationDate: Date;
-  items: ItemBudget[];
-  observation: string;
-  iva: number;
-  iva_percent: number;
-  total_gross: number;
-  total_net: number;
+  id_budget?: number;
+  client?: Client;
+  construction?: Construction;
+  creationDate?: Date;
+  items?: ItemBudget[];
+  observation?: string;
+  iva?: number;
+  iva_percent?: number;
+  total_gross?: number;
+  total_net?: number;
 }
 
 export interface ItemBudget {
