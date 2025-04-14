@@ -23,9 +23,10 @@
           </ion-item>
         </ion-col>
         <ion-col size="4">
-          <ion-item fill="outline">
+          <ion-item>
             <ion-label for="fechafactura">Fecha factura</ion-label>
             <ion-datetime-button
+              style="height: 56px"
               datetime="datetimeInvoice"
             ></ion-datetime-button>
             <ion-modal [keepContentsMounted]="true">
@@ -47,8 +48,12 @@
         </ion-col>
         <ion-col size="4">
           <ion-item>
-            <ion-label position="floating">Tipo de factura</ion-label>
-            <ion-select interface="popover" formControlName="invoice_type">
+            <ion-select
+              style="height: 56px"
+              interface="popover"
+              formControlName="invoice_type"
+              label="Tipo de factura"
+            >
               @for (invoice_type of invoiceTypes; track $index) {
               <ion-select-option [value]="invoice_type['value']">{{
                 invoice_type["key"]
