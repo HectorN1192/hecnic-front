@@ -9,8 +9,8 @@ export const dashboard_routes: Routes = [
       {
         path: 'resume',
         title: 'Resumen',
-        loadComponent: () =>
-          import('./resume/resume.component').then((c) => c.ResumeComponent),
+        loadChildren: () =>
+          import('./resume/resume.routes').then((c) => c.resume_routes),
         data: {
           icon: 'home',
         },

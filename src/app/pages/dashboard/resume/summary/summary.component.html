@@ -1,0 +1,102 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dashboard/resume"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Resumen facturas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12" sizeMd="6">
+        <app-filter-year
+          [years]="years$ | async"
+          (changeYear)="filterYear($event)"
+        ></app-filter-year>
+      </ion-col>
+
+      <ion-col size="12" sizeMd="6">
+        <ion-item>
+          @if (trimesterTypes) {
+          <ion-select
+            style="height: 56px"
+            interface="popover"
+            [(ngModel)]="trimester_type"
+            (ngModelChange)="filterTrimester($event)"
+            label="Trimestre de facturas"
+          >
+            @for (trimester_type of trimesterTypes; track $index) {
+            <ion-select-option [value]="trimester_type['value']">{{
+              trimester_type["key"]
+            }}</ion-select-option>
+            }
+          </ion-select>
+          }
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-toolbar color="primary">
+      <ion-title slot="start">Facturas a enviar</ion-title>
+    </ion-toolbar>
+    @if (rows) {
+    <ngx-datatable
+      #table
+      class="material"
+      [messages]="{ emptyMessage: 'No hay solicitudes pendientes' }"
+      [scrollbarH]="true"
+      [limit]="8"
+      [rows]="rows"
+      [rowHeight]="50"
+      [columns]="columns"
+      [columnMode]="'force'"
+      [sorts]="[{ prop: 'number_invoice_format', dir: 'asc' }]"
+      [sortType]="sortType.multi"
+      [headerHeight]="50"
+      [footerHeight]="50"
+    >
+    </ngx-datatable>
+    }
+    <ion-row>
+      <ion-col size="12" sizeMd="6">
+        <ion-button (click)="createSummaryPDF()" expand="full"
+          >Ver PDF resumen</ion-button
+        >
+      </ion-col>
+      <ion-col size="12" sizeMd="6">
+        <ion-button (click)="downloadSummaryPDF()" expand="full"
+          >Descargar las facturas</ion-button
+        >
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-select
+            label="Gestor"
+            interface="popover"
+            [(ngModel)]="clientSelected"
+            placeholder="Selección gestor"
+          >
+            @for (client of clients; track $index) {
+            <ion-select-option [value]="client">{{
+              client.name
+            }}</ion-select-option>
+            }
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-col size="12">
+      <ion-button
+        (click)="sendAgency()"
+        [disabled]="!clientSelected"
+        expand="full"
+        >Enviar al gestor</ion-button
+      >
+    </ion-col>
+  </ion-grid>
+</ion-content>

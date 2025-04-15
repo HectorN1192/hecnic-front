@@ -10,6 +10,7 @@
   ></ion-input>
   } @else if(type() === TypeSelectable.TEXTAREA) {
   <ion-textarea
+    [autoGrow]="true"
     [label]="placeholder()"
     labelPlacement="floating"
     [placeholder]="placeholder()"

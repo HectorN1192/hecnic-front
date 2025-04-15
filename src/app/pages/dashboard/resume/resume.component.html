@@ -1,3 +1,102 @@
 <app-header-page title="Resumen" />
 
-<ion-content class="ion-padding"> </ion-content>
+<ion-content class="ion-padding">
+  <ion-grid fixed>
+    @if(totalsHome$ | async; as totalsHome) {
+    <ion-row>
+      <ion-col size-xs="12" size-sm="4">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Facturación del mes</ion-card-title>
+            <ion-card-content>
+              {{ totalsHome.total_month | currency : "EUR" }}
+            </ion-card-content>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+      <ion-col size-xs="12" size-sm="4">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Facturación del año</ion-card-title>
+            <ion-card-content>
+              {{ totalsHome.total_year | currency : "EUR" }}
+            </ion-card-content>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+      <ion-col size-xs="12" size-sm="4">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Total retenciones del año</ion-card-title>
+            <ion-card-content>
+              {{ totalsHome.total_retention_year | currency : "EUR" }}
+            </ion-card-content>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    }
+    <ion-row>
+      <ion-col size="12">
+        <ion-button
+          [routerLink]="[
+            '/',
+            Endpoints.DASHBOARD,
+            Endpoints.RESUME,
+            Endpoints.SUMMARY
+          ]"
+          expand="block"
+          >Ir al resumen</ion-button
+        >
+      </ion-col>
+    </ion-row>
+
+    <ion-toolbar class="m-t-10" color="primary">
+      <ion-title slot="start">Solicitudes pendientes de retenciones</ion-title>
+    </ion-toolbar>
+
+    <ngx-datatable
+      #table
+      class="material"
+      [messages]="{ emptyMessage: 'No hay solicitudes pendientes' }"
+      [scrollbarH]="true"
+      [limit]="8"
+      [rows]="rows$ | async"
+      [rowHeight]="50"
+      [columns]="columns"
+      [columnMode]="'force'"
+      [sorts]="[{ prop: 'construction.id_construction', dir: 'desc' }]"
+      [sortType]="sortType.multi"
+      [headerHeight]="50"
+      [footerHeight]="50"
+    >
+    </ngx-datatable>
+
+    <ng-template #actions let-row="row" let-value="value" let-i="index">
+      <div class="btn-actions">
+        <ion-icon
+          tabindex="-1"
+          class="icon-actions"
+          slot="start"
+          aria-label="Ver obra"
+          name="eye-outline"
+          [routerLink]="[
+            '/',
+            Endpoints.DASHBOARD,
+            Endpoints.CONSTRUCTION,
+            RouterAction.VIEW,
+            row.construction.id_construction
+          ]"
+        ></ion-icon>
+        <ion-icon
+          tabindex="-1"
+          class="icon-actions"
+          slot="start"
+          aria-label="Crear documento"
+          name="mail-outline"
+          (click)="sendRequestRetenciton(row)"
+        ></ion-icon>
+      </div>
+    </ng-template>
+  </ion-grid>
+</ion-content>

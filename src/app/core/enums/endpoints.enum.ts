@@ -10,10 +10,13 @@ export enum Endpoints {
   CONSTRUCTION = 'construction',
   EMPLOYEE = 'employee',
   DASHBOARD = 'dashboard',
+  HOME = 'home',
   FILE = 'file',
   REQUEST_RETENTION = 'request_retention',
   BUDGET = 'budget',
   PARAMS_CONFIGURATION = 'params_configuration',
+  SUMMARY = 'summary',
+  RESUME = 'resume',
 }
 
 export enum OptionsEndPonits {

@@ -8,5 +8,4 @@ export enum RouteActions {
   EDIT = 'edit',
   COPY_ID = 'copy/:id',
   COPY = 'copy',
-  SUMMARY = 'summary',
 }
