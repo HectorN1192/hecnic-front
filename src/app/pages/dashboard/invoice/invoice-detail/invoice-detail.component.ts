@@ -227,6 +227,7 @@ export class InvoiceDetailComponent implements OnInit {
     let invoice: Invoice = {};
     invoice.construction = budget.construction;
     invoice.client = budget.client;
+    this.constructionSelected = invoice.construction!;
 
     invoice.items = [];
 
