@@ -18,7 +18,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "baseHref": "/hecnic-front/",
             "outputPath": {
               "base": "www"
             },
