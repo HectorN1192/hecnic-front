@@ -1,0 +1,1 @@
+import{a as o}from"./chunk-NLYVP2NR.js";import"./chunk-RW4GY4BD.js";var n=[{path:"",loadComponent:()=>import("./chunk-ONNXYUKY.js").then(t=>t.ResumeComponent)},{path:o.SUMMARY,title:"Resumen facturas",loadComponent:()=>import("./chunk-N427B4S6.js").then(t=>t.SummaryComponent)},{path:"**",redirectTo:"",pathMatch:"full"}];export{n as resume_routes};
