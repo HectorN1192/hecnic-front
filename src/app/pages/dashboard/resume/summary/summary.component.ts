@@ -296,7 +296,7 @@ export class SummaryComponent implements OnInit {
           return this._invoiceService
             .createInvoicePDF(row.id_invoice ?? 0)
             .pipe(
-              timeout(5000), // ⏳ 15 segundos por descarga
+              timeout(10000), // ⏳ 15 segundos por descarga
 
               tap((file) => {
                 console.log('Factura descargada ID:', row.id_invoice);
