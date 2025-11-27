@@ -34,7 +34,16 @@ import {
   NgxDatatableModule,
   SortType,
 } from '@swimlane/ngx-datatable';
-import { concat, shareReplay, tap } from 'rxjs';
+import {
+  catchError,
+  concatMap,
+  filter,
+  from,
+  of,
+  shareReplay,
+  tap,
+  timeout,
+} from 'rxjs';
 import { FilterYearComponent } from '../../../../shared/components/filter-year/filter-year.component';
 
 @Component({
@@ -277,26 +286,40 @@ export class SummaryComponent implements OnInit {
   }
 
   downloadSummaryPDF() {
-    const requests = this.rows
-      .filter((row) => row.id_invoice !== undefined)
-      .map((row) => {
-        console.log('Descargando factura ID:', row.id_invoice);
+    from(this.rows)
+      .pipe(
+        filter((row) => row.id_invoice !== undefined),
 
-        return this._invoiceService.createInvoicePDF(row.id_invoice ?? 0).pipe(
-          tap((file) => {
-            console.log('Factura descargada ID:', row.id_invoice);
+        concatMap((row) => {
+          console.log('Descargando factura ID:', row.id_invoice);
 
-            const blob = new Blob([file], { type: 'application/pdf' });
-            this._utilsService.downloadPDF(
-              blob,
-              'Factura ' + row.number_invoice_format
+          return this._invoiceService
+            .createInvoicePDF(row.id_invoice ?? 0)
+            .pipe(
+              timeout(5000), // ⏳ 15 segundos por descarga
+
+              tap((file) => {
+                console.log('Factura descargada ID:', row.id_invoice);
+
+                const blob = new Blob([file], { type: 'application/pdf' });
+                this._utilsService.downloadPDF(
+                  blob,
+                  'Factura ' + row.number_invoice_format
+                );
+              }),
+
+              catchError((err) => {
+                console.error(
+                  '❌ Error o timeout en factura ID:',
+                  row.id_invoice
+                );
+                return of(null); // ⬅️ evita que se corte la cadena
+              })
             );
-          })
-        );
+        })
+      )
+      .subscribe({
+        complete: () => console.log('✔️ Todas las facturas procesadas'),
       });
-
-    concat(...requests).subscribe({
-      complete: () => console.log('Todas las facturas procesadas'),
-    });
   }
 }
