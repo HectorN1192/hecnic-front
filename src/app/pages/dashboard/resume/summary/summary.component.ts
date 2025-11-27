@@ -277,7 +277,7 @@ export class SummaryComponent implements OnInit {
   }
 
   downloadSummaryPDF() {
-    const CONCURRENCIA = 4; // <= Número óptimo de descargas simultáneas
+    const CONCURRENCIA = 1; // <= Número óptimo de descargas simultáneas
     from(this.rows)
       .pipe(
         filter((row) => row.id_invoice !== undefined),
