@@ -34,7 +34,7 @@ import {
   NgxDatatableModule,
   SortType,
 } from '@swimlane/ngx-datatable';
-import { shareReplay } from 'rxjs';
+import { filter, from, mergeMap, shareReplay, tap } from 'rxjs';
 import { FilterYearComponent } from '../../../../shared/components/filter-year/filter-year.component';
 
 @Component({
@@ -277,22 +277,27 @@ export class SummaryComponent implements OnInit {
   }
 
   downloadSummaryPDF() {
-    this.rows.forEach((row) => {
-      if (row.id_invoice !== undefined) {
-        this._invoiceService
-          .createInvoicePDF(row.id_invoice)
-          .subscribe((file) => {
-            const blob: any = new Blob([file], { type: 'application/pdf' });
-            const url = window.URL.createObjectURL(blob);
-            //window.open(url);
-            setTimeout(() => {
-              this._utilsService.downloadPDF(
-                blob,
-                'Factura ' + row.number_invoice_format
-              );
-            }, 3000);
-          });
-      }
-    });
+    const CONCURRENCIA = 4; // <= Número óptimo de descargas simultáneas
+    from(this.rows)
+      .pipe(
+        filter((row) => row.id_invoice !== undefined),
+
+        mergeMap(
+          (row) =>
+            this._invoiceService.createInvoicePDF(row.id_invoice ?? 0).pipe(
+              tap((file) => {
+                const blob = new Blob([file], { type: 'application/pdf' });
+                this._utilsService.downloadPDF(
+                  blob,
+                  'Factura ' + row.number_invoice_format
+                );
+              })
+            ),
+          CONCURRENCIA
+        )
+      )
+      .subscribe({
+        complete: () => console.log('Todas las facturas descargadas'),
+      });
   }
 }
