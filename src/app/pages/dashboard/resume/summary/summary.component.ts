@@ -34,7 +34,7 @@ import {
   NgxDatatableModule,
   SortType,
 } from '@swimlane/ngx-datatable';
-import { filter, from, mergeMap, shareReplay, tap } from 'rxjs';
+import { concat, shareReplay, tap } from 'rxjs';
 import { FilterYearComponent } from '../../../../shared/components/filter-year/filter-year.component';
 
 @Component({
@@ -277,27 +277,26 @@ export class SummaryComponent implements OnInit {
   }
 
   downloadSummaryPDF() {
-    const CONCURRENCIA = 1; // <= Número óptimo de descargas simultáneas
-    from(this.rows)
-      .pipe(
-        filter((row) => row.id_invoice !== undefined),
+    const requests = this.rows
+      .filter((row) => row.id_invoice !== undefined)
+      .map((row) => {
+        console.log('Descargando factura ID:', row.id_invoice);
 
-        mergeMap(
-          (row) =>
-            this._invoiceService.createInvoicePDF(row.id_invoice ?? 0).pipe(
-              tap((file) => {
-                const blob = new Blob([file], { type: 'application/pdf' });
-                this._utilsService.downloadPDF(
-                  blob,
-                  'Factura ' + row.number_invoice_format
-                );
-              })
-            ),
-          CONCURRENCIA
-        )
-      )
-      .subscribe({
-        complete: () => console.log('Todas las facturas descargadas'),
+        return this._invoiceService.createInvoicePDF(row.id_invoice ?? 0).pipe(
+          tap((file) => {
+            console.log('Factura descargada ID:', row.id_invoice);
+
+            const blob = new Blob([file], { type: 'application/pdf' });
+            this._utilsService.downloadPDF(
+              blob,
+              'Factura ' + row.number_invoice_format
+            );
+          })
+        );
       });
+
+    concat(...requests).subscribe({
+      complete: () => console.log('Todas las facturas procesadas'),
+    });
   }
 }
